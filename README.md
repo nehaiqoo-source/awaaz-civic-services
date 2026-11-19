@@ -1,6 +1,10 @@
 # Awaaz: fill any form by voice
 
-Civic services track, "India Runs on Voice" hackathon. A person opens any service form, taps Awaaz, and answers each question **by speaking in their own language**. Awaaz asks aloud, listens, and fills the form on the page. The person checks it and presses Submit themselves.
+Civic services: voice-based grievance filling. Public services for people who can't fill a form.
+
+Built for the "India Runs on Voice" hackathon (Civic services track). A person opens a service form, taps Awaaz, and answers each question by speaking in their own language. Awaaz asks aloud, listens, and fills the form on the page. The person checks it and presses Submit.
+
+Live at https://www.awaaz.help (also https://awaaz-civic.vercel.app). Installation options for every device are on `/install`.
 
 ```
  page form ──scan──▶ field list ──ask aloud──▶ person speaks ──▶ /api/fill ──▶ validated value ──▶ filled + highlighted
@@ -8,109 +12,127 @@ Civic services track, "India Runs on Voice" hackathon. A person opens any servic
                      options)
 ```
 
-## Saathi and proof (new)
-- **Saathi** (`/saathi`): say a problem ("meri pension band hai", "gali mein gaddha hai"); it names the right government service, what to keep ready, and the official link, then hands over to voice-filling. The catalog (`src/lib/saathi/catalog.ts`) is a closed, hand-curated list: the matcher runs on the device first, the AI is only asked (transcript only) when the rules are not sure, and the model can only return catalog ids, so it cannot invent a website. Every link was fetched (HTTP 200) on 2026-11-19. PM-JAY, NSAP, National Scholarship Portal, Swachhata app and PMGSY were **left out because they could not be reached from the build machine**. Roads and power cuts have no national portal, so they go to the in-app complaint.
-- **Photo + location proof** on complaints: the photo is redrawn on a canvas in the browser (removes EXIF, including hidden GPS) and the server **refuses any JPEG that still has EXIF**. Location is added only when the person taps the button and is rounded to ~11 m. The photo is write-only (no public URL, one-time token held by the submitter) and the public tracking lookup only says whether a photo/location exists. "Let my phone describe the photo" is an opt-in checkbox: a small open model (CLIP, run in the browser with transformers.js) picks from a fixed list of civic problems, so it needs **no API key and the photo never leaves the device** (one-time ~90 MB model download from Hugging Face; the onnxruntime files are self-hosted in `public/ort`). The text it shows comes from a fixed table, not from the model. Saathi cards also carry a "Link not opening?" fallback to the national portal (india.gov.in) and the government directory (igod.gov.in).
-- Storage: complaints and photos use a **private Vercel Blob store** when `BLOB_READ_WRITE_TOKEN` is set, otherwise a local JSON file (dev only; Vercel's disk is read-only).
+## Saathi: from a problem to the right service
+
+Say a problem ("meri pension band hai", "gali mein gaddha hai") at `/saathi`. It names the government service that fits, lists what to keep ready, and links to the official site. For complaints it can also hand over to voice-filling.
+
+The catalog in `src/lib/saathi/catalog.ts` is a closed, hand-curated list. The matcher runs on the device first. Only when the rules are unsure is the transcript sent to the AI, and the model can return nothing but catalog ids, so it cannot invent a website. Every link returned HTTP 200 on 2026-11-19. PM-JAY, NSAP, the National Scholarship Portal, the Swachhata app and PMGSY are missing because the build machine could not reach them. Roads and power cuts have no national portal, so they go to the in-app complaint. Each card also has a "Link not opening?" fallback to india.gov.in and igod.gov.in.
+
+## Photo and location proof
+
+- The browser redraws the photo on a canvas, which removes EXIF data including hidden GPS. The server refuses any JPEG that still has EXIF.
+- Location is added only when the person taps the button, and it is rounded to about 11 m.
+- The photo is write-only. It has no public URL, and the submitter holds a one-time token. The public tracking lookup says only whether a photo or location exists.
+- "Let my phone describe the photo" is an opt-in checkbox. A small open model (CLIP, run in the browser with transformers.js) picks from a fixed list of civic problems. It needs no API key and the photo stays on the device. The first use downloads about 90 MB from Hugging Face, and the onnxruntime files are self-hosted in `public/ort`. The text shown comes from a fixed table, not from the model.
+- Complaints and photos go to a private Vercel Blob store when `BLOB_READ_WRITE_TOKEN` is set. Otherwise a local JSON file is used, for development only (Vercel's disk is read-only).
 
 ## Where it runs
+
 | Surface | How | Status |
 |---|---|---|
-| Chrome / Edge / Brave (desktop) | Extension: `release/awaaz-chrome.zip` (or `extension/dist/chrome`). Works in the browser people already use, no built-in browser needed | Built and packed, **not yet loaded in a real Chrome** |
-| Firefox (desktop, Android) | Extension: `release/awaaz-firefox.zip` | Built, **untested** (Android needs a signed/published add-on) |
-| Phones and any browser | Bookmarklet from `/mobile` (loads the same overlay) | Overlay tested in Chromium (desktop and phone-sized); **real phones untested** |
-| **Awaaz mobile app** (`mobile/`, Expo) | Built-in browser (WebView) + native speech (`expo-speech-recognition`) + native TTS; no per-site permissions | Typechecks, bundles with Metro (Android), host logic unit-tested; **never run on a phone or emulator** |
-| Standalone demo | `/demo-form`, `/grievance` | Tested |
+| Web app (PWA) | Install from Chrome, Edge or Safari (Android, iPhone, Mac, Windows, Linux) | Manifest and icons checked on the live site; install itself not tried on real devices |
+| Chrome, Edge, Brave | Extension: `release/awaaz-chrome.zip` (also at `/downloads`), or `extension/dist/chrome` | Built and packed, not yet loaded in a real Chrome |
+| Firefox | Extension: `release/awaaz-firefox.zip` | Built, untested. Firefox has no speech recognition API, so typing only. Android needs a signed add-on |
+| Any browser, phones | Bookmarklet from `/mobile`, which loads the same overlay | Tested in Chromium at desktop and phone sizes, not on real phones |
+| Android app (`mobile/`, Expo) | Built-in browser (WebView), native speech (`expo-speech-recognition`) and native TTS. No per-site permissions | Debug build ran on an Android 17 emulator. The release APK points at the live site and has not been run on a device |
+| iPhone and iPad | PWA through Safari, "Add to Home Screen" | A native app needs an Apple developer account, so none is built |
+| Demo pages | `/demo-form`, `/grievance` | Tested |
 
-The assistant UI is one codebase (`overlay/`). The extension and the bookmarklet only differ in how they load it and reach the backend.
+There is no Electron or Tauri desktop shell. Electron has no built-in speech recognition, so a wrapped app would lose the main feature. The installed browser app uses the browser's own recognition.
+
+The assistant UI is one codebase (`overlay/`). The extension and the bookmarklet differ only in how they load it and reach the backend.
 
 ## Mobile app (built-in browser)
-The user types a service website address inside the app, taps **Awaaz**, and the same overlay is injected into that page. Because the page is in our own WebView, there is no extension or per-site permission step. Browser speech APIs do not exist in WebViews, so the overlay talks to the app through a small JSON bridge (`overlay/bridge-protocol.ts`) and the app does speech-to-text, text-to-speech and the `/api/fill` call natively.
+
+The user types a service website address inside the app, taps Awaaz, and the same overlay is injected into that page. The page runs in our own WebView, so there is no extension and no per-site permission step. WebViews have no browser speech APIs. The overlay talks to the app through a small JSON bridge (`overlay/bridge-protocol.ts`), and the app does speech-to-text, text-to-speech and the `/api/fill` call natively.
+
 ```bash
 npm run build:ext                    # regenerates mobile/src/generated (overlay bundle + protocol copy)
 cd mobile && npm install
 EXPO_PUBLIC_API_BASE=https://your-host npx expo run:android   # needs a dev build (native modules); Expo Go cannot load expo-speech-recognition
 ```
-Defaults to `http://10.0.2.2:3000` (Android emulator to your PC). Plain HTTP for the server is accepted in dev builds only.
-Bridge safety: the page is untrusted. The native side acts only while the user has switched Awaaz on with the native button (auto-off on navigation, app background, 10 min), validates every message, allows one listen at a time, and rate-limits fill calls. Known limit: on Android, a hostile iframe in the page could also post bridge messages while Awaaz is on; the native "Awaaz is on" banner and short timeouts limit this.
+
+The default is `http://10.0.2.2:3000` (Android emulator to your PC). Plain HTTP is accepted in dev builds only.
+
+The page is untrusted. The native side acts only while the user has switched Awaaz on with the native button, and it switches off on navigation, when the app goes to the background, and after 10 minutes. It validates every message, allows one listen at a time, and rate-limits fill calls. One known limit: on Android, a hostile iframe in the page could also post bridge messages while Awaaz is on. The "Awaaz is on" banner and the short timeouts limit this.
 
 ## Run it
+
 ```bash
 rm -rf node_modules && npm install   # node_modules in this folder were installed on Linux; reinstall on your machine
 cp .env.example .env.local           # optional: set ANTHROPIC_API_KEY for AI mapping (server-side only)
 npm run dev                          # http://localhost:3000
 ```
-- Try it: open http://localhost:3000/demo-form, tap "Open Awaaz assistant", allow the microphone, answer the questions. Use Chrome (Web Speech API).
-- **Chrome extension:** `npm run build:ext`, then `chrome://extensions` → Developer mode → Load unpacked → `extension/dist/chrome`. Open a form page and click the toolbar button (click again to close). Extension settings let you point it at your server.
-- **Desktop extension (Chrome, Edge, Brave):** `npm run pack:ext` writes `release/awaaz-chrome.zip` and `release/awaaz-firefox.zip`. Unzip the Chrome one, open `chrome://extensions` (Edge: `edge://extensions`), turn on Developer mode, Load unpacked, pick the folder. Pin the Awaaz icon, open a form and click it or press `Alt+Shift+A`. The same zip can be uploaded to the Chrome Web Store / Edge Add-ons; Firefox needs the other zip signed on addons.mozilla.org. Icons are regenerated with `npm run icons`.
-- **Production:** deploy the Next app on HTTPS, build the extension with `AWAAZ_API_BASE=https://your-host npm run pack:ext`. `npm run build` also rebuilds the overlay.
+
+- Open http://localhost:3000/demo-form, tap "Open Awaaz assistant", allow the microphone and answer the questions. Use Chrome, which has the Web Speech API.
+- Extension for development: `AWAAZ_API_BASE=http://localhost:3000 npm run build:ext`, then `chrome://extensions` → Developer mode → Load unpacked → `extension/dist/chrome`. Open a form page and click the toolbar button (click again to close). The extension settings let you point it at another server.
+- Packaging: `npm run pack:ext` writes `release/awaaz-chrome.zip` and `release/awaaz-firefox.zip` with the live API address built in (set `AWAAZ_API_BASE` to override). Unzip the Chrome one, open `chrome://extensions` (Edge: `edge://extensions`), turn on Developer mode, choose Load unpacked and pick the folder. Pin the Awaaz icon, open a form, then click it or press `Alt+Shift+A`. The same zip can go to the Chrome Web Store or Edge Add-ons. Firefox needs the other zip signed on addons.mozilla.org. `npm run icons` regenerates the icons.
+- Production: deploy the Next app on HTTPS. `npm run build` also rebuilds the overlay and copies the onnxruntime files to `public/ort`.
 
 ## How a spoken answer becomes a field value
-1. `overlay/scan.ts` reads visible, enabled controls: label (label/for, wrapping label, aria, placeholder), type, select options, radio groups.
+
+1. `overlay/scan.ts` reads visible, enabled controls: label (label/for, wrapping label, aria, placeholder), type, select options and radio groups.
 2. For each field the assistant speaks the question, then listens (`overlay/voice.ts`).
-3. `POST /api/fill` validates the answer for that field's type: Hindi/English spoken digits ("नौ आठ… double nine") for phone/number, spoken emails ("dot", "at the rate"), dates ("15 August 1990", numeric day-first), option matching (exact/partial/yes-no in Hindi and English). Free text is passed through cleaned. If rules fail and an API key exists, Claude maps it.
-4. "Say everything" mode: one free-form recording mapped onto all fields by Claude (needs the API key).
-5. `overlay/apply.ts` writes the value with the native setter plus `input`/`change` events so React/Angular/Vue forms notice it. Undo restores the previous value.
+3. `POST /api/fill` validates the answer for that field's type. It understands Hindi and English spoken digits ("नौ आठ… double nine") for phone and number fields, spoken emails ("dot", "at the rate"), dates ("15 August 1990", or numeric day-first), and option matching (exact, partial, yes/no in Hindi and English). Free text is cleaned and passed through. If the rules fail and an API key exists, Claude maps the answer.
+4. "Say everything" mode maps one free-form recording onto all fields with Claude. It needs the API key.
+5. `overlay/apply.ts` writes the value with the native setter plus `input` and `change` events, so React, Angular and Vue forms notice it. Undo restores the previous value.
 
 ## Voice commands (beyond forms)
-Tap **Voice commands** → choose what Awaaz may do on this site and for how long → **Allow and start**. Then just speak: "scroll down", "click Track complaint", "go back", "read this page", "नीचे जाओ", or give field values. Hands-free until you say "stop".
+
+Tap Voice commands, choose what Awaaz may do on this site and for how long, then tap Allow and start. After that, speak: "scroll down", "click Track complaint", "go back", "read this page", "नीचे जाओ", or give field values. It stays hands-free until you say "stop".
 
 | Permission (you tick each) | Lets Awaaz | Extra gate |
 |---|---|---|
 | See and read | scroll, read visible text aloud | none |
-| Fill fields | write validated values (undo by voice or button) | never passwords/OTP/Aadhaar/card/bank |
+| Fill fields | write validated values (undo by voice or button) | never passwords, OTP, Aadhaar, card or bank numbers |
 | Press buttons and links here | ordinary controls on this site | none |
-| Open other websites | links leaving the site | **you tap Yes every time** |
-| Submit, send, delete, log in/out | risky controls | **you tap Yes every time** |
+| Open other websites | follow links that leave the site | you tap Yes every time |
+| Submit, send, delete, log in or out | risky controls | you tap Yes every time |
 
-Never possible by voice, whatever is ticked: payments/purchases/transfers, OTP, passwords, downloads, `tel:`/`mailto:`/`javascript:` links.
+Whatever is ticked, voice can never make payments, purchases or transfers, enter OTPs or passwords, download files, or follow `tel:`, `mailto:` and `javascript:` links.
 
 Security design (tests in `tests/act-*.test.ts`):
-- **Closed action set** (`src/lib/act/schema.ts`): click / fill / scroll / back / read / stop, each aimed at an element id from a page snapshot. No scripts, no free-form URLs, no "type anywhere".
-- **The server only proposes.** `/api/act` returns a plan; the page re-sanitizes it, re-computes the risk from the *live* element (label, destination, submit-ness) right before acting, and aborts if the page changed it (also after the confirmation dialog).
-- **Confirmations are physical.** Yes/Allow buttons ignore script-made clicks (`event.isTrusted`), and speech never confirms (page audio could say "yes"). Verified in a real browser: a scripted click on "Allow and start" does nothing.
-- **Permissions live in memory only** (page JS can forge localStorage), are per-origin, expire (5/10/30 min, max 30), and die on close or navigation to another origin. Nothing is granted by default.
-- **Data minimisation:** the server sees only link hosts (never full URLs), and only elements/fields you allowed; on-device mode sends nothing. Simple commands never leave the device (built-in Hindi/English rules).
-- Prompt-injection: page text is untrusted data in the prompt, model output is sanitized (at most 5 actions, one click, last), a refused step cancels the rest of the plan, 20 actions/minute cap.
-- This replaces the old "never submits": a submit is now possible only with the *risky* permission plus a physical tap each time.
-- Limits: in the mobile app the native side proxies `/api/act` (bridge message `act`) and the Yes/Allow taps are real touches in the WebView, verified on an Android 17 (API 37) emulator: the overlay injects into the WebView, the consent screen works, a real touch on "Allow and start" starts listening through native speech, and the grants line shows; a spoken command was NOT tested end to end (emulator has no voice input) and no physical phone was used; commands act on the main page (no iframes/shadow DOM yet); the voice → action loop was verified with scripted voice in tests, **not with a real microphone**.
+
+- The action set is closed (`src/lib/act/schema.ts`): click, fill, scroll, back, read, stop, each aimed at an element id from a page snapshot. There are no scripts, no free-form URLs and no "type anywhere".
+- The server only proposes. `/api/act` returns a plan. The page re-sanitizes it, recomputes the risk from the live element (label, destination, whether it submits) right before acting, and aborts if the page changed it, also after the confirmation dialog.
+- Confirmations need a physical tap. The Yes and Allow buttons ignore script-made clicks (`event.isTrusted`), and speech never confirms, because page audio could say "yes". In a real browser, a scripted click on "Allow and start" does nothing.
+- Permissions live in memory only, because page JS can forge localStorage. They are per origin, expire after 5, 10 or 30 minutes (30 at most), and end on close or on navigation to another origin. Nothing is granted by default.
+- The server sees only link hosts (never full URLs) and only the elements and fields you allowed. On-device mode sends nothing. Simple commands never leave the device, since Hindi and English rules are built in.
+- Page text is untrusted data in the prompt. Model output is sanitized: at most 5 actions, one click, and it comes last. A refused step cancels the rest of the plan, and calls are capped at 20 actions a minute.
+- A submit is possible only with the risky permission plus a physical tap each time.
+
+Limits: in the mobile app the native side proxies `/api/act` (bridge message `act`), and the Yes and Allow taps are real touches in the WebView. On an Android 17 (API 37) emulator the overlay injected into the WebView, the consent screen worked, a real touch on "Allow and start" started listening through native speech, and the grants line showed. A spoken command was not tested end to end (the emulator has no voice input), and no physical phone was used. Commands act on the main page only, with no iframes or shadow DOM yet. The voice-to-action loop was verified with scripted voice in tests, not with a real microphone.
 
 ## Safety rules (enforced in code and tests)
-- Never fills passwords, OTPs, CAPTCHAs, card data, Aadhaar, PAN, passport, bank/UPI and similar IDs. The check runs **again on the server** (`src/lib/fill/sensitive.ts`), because a page-supplied descriptor is not authoritative. These fields are highlighted and the person is told to type them.
-- Never submits the form.
-- Page labels and the transcript are untrusted: the model prompt says so, select/radio output must be one of the page's own option values, every value is re-validated, panel text is set with `textContent` only (a test checks a malicious label).
-- Only the field descriptions and the spoken answer go to the server. Existing values of other fields are never sent. Nothing is stored by `/api/fill`.
-- The extension only touches a page when the person clicks its button (`activeTab`), has no always-on content script, and the background worker only forwards validated messages to an HTTPS (or localhost) server.
-- `/api/fill` has CORS `*` (needed from third-party pages) but is stateless, cookie-free, size-capped and rate-limited per IP (in memory; the IP comes from `x-forwarded-for`, which is spoofable without a trusted proxy).
+
+- Awaaz never fills passwords, OTPs, CAPTCHAs, card data, Aadhaar, PAN, passport, bank or UPI numbers and similar IDs. The check runs again on the server (`src/lib/fill/sensitive.ts`), because a page-supplied descriptor is not authoritative. These fields are highlighted and the person is told to type them.
+- Form filling never submits the form. With voice commands, a submit needs the risky permission and a physical tap each time (see above).
+- Page labels and the transcript are untrusted. The model prompt says so, select and radio output must be one of the page's own option values, every value is re-validated, and panel text is set with `textContent` only (a test checks a malicious label).
+- Only the field descriptions and the spoken answer go to the server. Existing values of other fields are never sent. `/api/fill` stores nothing.
+- The extension touches a page only when the person clicks its button (`activeTab`). It has no always-on content script, and the background worker forwards only validated messages to an HTTPS (or localhost) server.
+- `/api/fill` has CORS `*` because it is called from third-party pages, but it is stateless, cookie-free, size-capped and rate-limited per IP. The limiter is in memory, and the IP comes from `x-forwarded-for`, which can be spoofed without a trusted proxy.
 
 ## Checks
+
 ```bash
 npm test && npm run typecheck && npm run lint && npm run build
 ```
-126 tests (incl. voice commands, permissions and policy): normalizers, sensitive-field rules, server fill logic, form scanning/filling in jsdom, the native host controller and mobile URL/API rules, the full guided session (overlay + server logic with a fake voice), panel UI, extension manifests, API-base rules, plus the earlier grievance flow.
-Also verified in headless Chromium against the production build: the demo form is filled end to end (including React-controlled inputs, a select, radio, checkbox, date, Aadhaar left empty) at desktop and 390x800 phone sizes, with browser speech APIs replaced by a script.
 
-## Not verified / known limitations
-- **The mobile app has never run on a device or emulator.** Verified only: TypeScript, `expo-doctor` (20/20), and a Metro Android JS bundle. Real native speech, permissions, WebView injection and iOS are untested (iOS not even bundled).
-- `react-native-webview` 14.0.1 types omit `ref`; `mobile/App.tsx` uses a narrow cast verified against its source.
-- **Real microphone and speech quality** were not tested (no mic here). Browser speech recognition varies by browser and language; it sends audio to the browser vendor.
-- The extension was built but **never loaded into Chrome/Firefox**; the background-worker proxy is untested in a real extension runtime.
-- **AI mapping was never run against the live API** (no key available). Only the rules path ran end to end; for the AI path, only the validation of model output is covered by unit tests.
-- The bookmarklet is blocked on sites with a strict Content-Security-Policy; use the extension there. Running bookmarklets from the Chrome Android address bar and Safari's bookmarks is the documented workaround but is untested on real phones.
-- Only the main page is scanned: forms inside iframes, shadow DOM, canvas widgets and multi-step wizards that re-render fields need a re-scan (not automatic yet).
-- Custom widgets (fancy dropdowns that are not `<select>`, date pickers that are not `<input type=date>`) are not understood.
-- `/grievance` stores complaints in a JSON file and forwards them nowhere.
+151 tests cover voice commands, permissions and policy, the normalizers, sensitive-field rules, server fill logic, form scanning and filling in jsdom, the native host controller, mobile URL and API rules, the full guided session (overlay and server logic with a fake voice), panel UI, extension manifests, API-base rules, the grievance flow, Saathi matching and catalog rules, photo and EXIF checks, and the Blob repository with a fake client.
 
+The demo form was also filled end to end in headless Chromium against the production build, at desktop and 390x800 phone sizes, with browser speech APIs replaced by a script. That covered React-controlled inputs, a select, a radio, a checkbox and a date, with Aadhaar left empty.
 
-## Platforms (one tool, every device)
+On the live site, a complaint was submitted, a photo uploaded and the status checked with `hasPhoto` and `hasLocation` true.
 
-| Platform | How | Voice |
-| --- | --- | --- |
-| Android | Install the web app from Chrome (PWA), or sideload the native APK (`mobile/`, built with `EXPO_PUBLIC_API_BASE=https://awaaz-civic.vercel.app`) | yes |
-| iPhone / iPad | Safari → Add to Home Screen (PWA). A native iOS build needs an Apple developer account, so it is not built | yes (Safari) |
-| Mac | Chrome/Edge "Install", or Safari 17 "Add to Dock", plus the extension | yes |
-| Windows / Linux | Chrome/Edge "Install", plus the extension | yes |
-| Chrome, Edge, Brave | `release/awaaz-chrome.zip` (also at `/downloads`) | yes |
-| Firefox | `release/awaaz-firefox.zip` | limited (Firefox has no speech recognition API; typing works) |
+## Not verified, known limits
 
-There is deliberately no Electron/Tauri desktop shell: Electron has no built-in speech recognition, so a wrapped app would lose the main feature. The installed browser app uses the browser's own recognition. `npm run pack:ext` now bakes in the live API (`AWAAZ_API_BASE` to override, for example `http://localhost:3000` for local work). The `/install` page explains every option to end users.
+- A physical phone was never used. The release APK was built but not run, and iOS is not bundled at all.
+- `react-native-webview` 14.0.1 types omit `ref`. `mobile/App.tsx` uses a narrow cast that was checked against the library source.
+- Real microphone input and speech quality were not tested (no mic here). Browser speech recognition varies by browser and language, and it sends audio to the browser vendor.
+- The extension was built but never loaded into Chrome or Firefox, so the background-worker proxy is untested in a real extension runtime.
+- AI mapping and the Saathi "look closer" step were never run against the live API (no key available). Only the rules path ran end to end. For the AI path, unit tests cover only the validation of model output.
+- The on-device photo description was tried on one pothole photo in a desktop browser. It was not tried on a phone.
+- The bookmarklet is blocked on sites with a strict Content-Security-Policy, and the extension is the answer there. Running bookmarklets from the Chrome Android address bar or Safari bookmarks is the documented workaround, untested on real phones.
+- Only the main page is scanned. Forms inside iframes, shadow DOM, canvas widgets, and multi-step wizards that re-render fields need a re-scan, which is not automatic yet.
+- Custom widgets (dropdowns that are not `<select>`, date pickers that are not `<input type=date>`) are not understood.
+- `/grievance` stores complaints and forwards them nowhere.

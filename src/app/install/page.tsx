@@ -41,7 +41,7 @@ export default function Install() {
         <h1>
           Get <span className="grad">Awaaz</span> on your device
         </h1>
-        <p className="lede">The same assistant everywhere: phone, computer and browser. Nothing is installed from a store without you choosing it.</p>
+        <p className="lede">The same assistant on your phone, your computer and inside your browser.</p>
       </header>
 
       <section className="card">

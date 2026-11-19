@@ -31,7 +31,7 @@ export default function Home() {
         <ul className="chips" aria-label="Highlights">
           <li>Hindi, English &amp; more</li>
           <li>Works on any form</li>
-          <li>You stay in control</li>
+          <li>You press Submit yourself</li>
           <li>No passwords or OTPs, ever</li>
         </ul>
       </header>
@@ -52,7 +52,7 @@ export default function Home() {
           <div className="feature">
             <span className="ico" aria-hidden="true">✅</span>
             <h3>You submit</h3>
-            <p>You review everything and press Submit yourself. Nothing is sent without you.</p>
+            <p>You read everything first, then press Submit yourself.</p>
           </div>
         </div>
         <p className="note">

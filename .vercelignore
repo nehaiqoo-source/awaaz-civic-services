@@ -1,0 +1,9 @@
+node_modules
+.next
+mobile
+release
+docs
+extension/dist
+data
+.claude
+tests

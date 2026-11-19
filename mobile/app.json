@@ -1,0 +1,34 @@
+{
+  "expo": {
+    "name": "Awaaz",
+    "slug": "awaaz",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.civicservices.awaaz"
+    },
+    "android": {
+      "package": "com.civicservices.awaaz",
+      "adaptiveIcon": {
+        "backgroundColor": "#E6F4FE",
+        "foregroundImage": "./assets/android-icon-foreground.png",
+        "backgroundImage": "./assets/android-icon-background.png",
+        "monochromeImage": "./assets/android-icon-monochrome.png"
+      },
+      "predictiveBackGestureEnabled": false
+    },
+    "plugins": [
+      [
+        "expo-speech-recognition",
+        {
+          "microphonePermission": "Awaaz uses the microphone only while you tap Awaaz and answer a question.",
+          "speechRecognitionPermission": "Awaaz uses speech recognition to turn your spoken answers into text.",
+          "androidSpeechServicePackages": ["com.google.android.googlequicksearchbox"]
+        }
+      ]
+    ]
+  }
+}

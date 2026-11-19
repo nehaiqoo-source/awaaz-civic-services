@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Awaaz settings</title>
+    <style>
+      body { font: 16px/1.55 system-ui, -apple-system, 'Segoe UI', 'Noto Sans Devanagari', sans-serif; margin: 0; background: #f6f3ec; color: #111827; }
+      main { max-width: 520px; margin: 0 auto; padding: 32px 20px; display: grid; gap: 16px; }
+      .brand { display: flex; align-items: center; gap: 12px; }
+      .brand img { width: 44px; height: 44px; }
+      h1 { margin: 0; font-size: 22px; letter-spacing: -0.01em; }
+      .tag { margin: 0; color: #5d6678; font-size: 14px; }
+      form, section { background: #fff; border: 1px solid #e7e2d6; border-radius: 16px; padding: 20px; display: grid; gap: 10px; box-shadow: 0 8px 24px -14px rgba(17,24,39,.25); }
+      label { font-weight: 600; font-size: 15px; }
+      input { width: 100%; padding: 12px 14px; font: inherit; border: 1.5px solid #e7e2d6; border-radius: 12px; }
+      input:focus { outline: none; border-color: #ea580c; box-shadow: 0 0 0 4px rgba(234,88,12,.14); }
+      button { padding: 12px 18px; font: inherit; font-weight: 700; color: #fff; border: 0; border-radius: 12px; cursor: pointer; background: linear-gradient(135deg, #ea580c, #c2410c); }
+      #status { margin: 0; min-height: 1.4em; color: #138808; font-weight: 600; }
+      ul { margin: 0; padding-left: 20px; color: #374151; font-size: 15px; }
+      kbd { background: #f1ecdf; padding: 1px 6px; border-radius: 6px; font-size: 14px; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <div class="brand">
+        <img src="icons/icon-128.png" alt="" />
+        <div>
+          <h1>Awaaz · आवाज़</h1>
+          <p class="tag">Civic services: voice-based grievance filling</p>
+        </div>
+      </div>
+      <section>
+        <strong>How to use</strong>
+        <ul>
+          <li>Open a service form, then click the Awaaz button in the toolbar or press <kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>A</kbd>.</li>
+          <li>Allow the microphone, pick your language and speak.</li>
+          <li>Awaaz only touches a page when you click it. You always press Submit yourself.</li>
+        </ul>
+      </section>
+      <form id="form">
+        <label for="apiBase">Awaaz server address</label>
+        <input id="apiBase" type="url" required />
+        <button type="submit">Save</button>
+        <p id="status" role="status"></p>
+      </form>
+    </main>
+    <script src="options.js"></script>
+  </body>
+</html>

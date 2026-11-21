@@ -48,3 +48,14 @@ Tick each line in Play Console in this order. "Ready" means the text or file exi
 - "Why microphone?" Speech input, only while the user taps the mic. Audio is not stored; the speech service of the device returns text.
 - "Is this a WebView wrapper?" The app has native speech recognition and text-to-speech bridged into the pages, a built-in browser that fills forms, and consent screens in native code. Ask the reviewer to try the voice form fill.
 - "Government impersonation?" Independent project. No government logo or name in the icon, title or screenshots.
+
+## Known gaps (audit, 21 Nov 2026)
+- Not tested on a real phone: microphone, camera, GPS, the extension in real Chrome. The Android emulator ran the release build (home screen, Saathi, complaint page and guides loaded from www.awaaz.help); it has no real voice input.
+- Rate limiting is in memory per server instance, so on Vercel it is a soft limit. A shared store or Vercel's firewall rate limit would make it firm.
+- No way for users to delete their own complaint. The privacy policy points to a GitHub issue with the tracking ID. A delete link with a secret would be better.
+- No LICENSE file in the public repo, so by default all rights are reserved. Pick a licence if you want others to reuse it.
+- CI file is at `docs/github-ci.yml`. To switch it on, run `gh auth refresh -s workflow`, then move it to `.github/workflows/ci.yml` and push.
+- Apex domain `awaaz.help` needs its GoDaddy A record.
+- AI features (AI fill, Saathi "look closer") are off until `ANTHROPIC_API_KEY` is set on Vercel. The site works without them.
+- No analytics, so only Search Console will show traffic and queries.
+- iOS: PWA only; no App Store app.

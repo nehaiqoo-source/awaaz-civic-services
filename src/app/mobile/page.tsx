@@ -1,5 +1,11 @@
 import { BookmarkletInstall } from '@/components/BookmarkletInstall'
 
+export const metadata = {
+  title: 'Awaaz on your phone: one-tap bookmarklet',
+  description: 'Fill government forms by voice on any phone browser, without installing anything.',
+  alternates: { canonical: '/mobile' },
+}
+
 export default function MobilePage() {
   return (
     <main>

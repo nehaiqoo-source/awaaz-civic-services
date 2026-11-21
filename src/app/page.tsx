@@ -1,8 +1,28 @@
 import Link from 'next/link'
+import { SITE_URL } from '@/lib/site'
+
+const JSON_LD = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'WebApplication',
+      name: 'Awaaz',
+      url: SITE_URL,
+      description: 'Voice-based grievance filling and government form filling for people who can’t fill a form.',
+      applicationCategory: 'UtilitiesApplication',
+      operatingSystem: 'Android, iOS, Windows, macOS, Linux (browser)',
+      inLanguage: ['hi-IN', 'en-IN'],
+      offers: { '@type': 'Offer', price: '0', priceCurrency: 'INR' },
+    },
+    { '@type': 'Organization', name: 'Awaaz', url: SITE_URL, logo: `${SITE_URL}/icon-512.png` },
+    { '@type': 'WebSite', name: 'Awaaz', url: SITE_URL },
+  ],
+}
 
 export default function Home() {
   return (
     <main>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(JSON_LD) }} />
       <header className="hero">
         <div className="brand">
           <span className="brand-mark" aria-hidden="true">
@@ -76,6 +96,10 @@ export default function Home() {
             <span>One-tap bookmarklet. Works on websites without installing anything.</span>
           </li>
           <li>
+            <Link href="/help">Help guides · मदद गाइड</Link>
+            <span>Pension, ration, roads, water, RTI and more: where to go and what to keep ready.</span>
+          </li>
+          <li>
             <Link href="/grievance">Standalone grievance filing</Link>
             <span>Speak a complaint, add a photo and location as proof, get a tracking ID.</span>
           </li>
@@ -88,7 +112,9 @@ export default function Home() {
         </p>
       </section>
 
-      <p className="foot">Built for India Runs on Voice · Civic services track</p>
+      <p className="foot">
+        Built for India Runs on Voice · Civic services track · <Link href="/privacy">Privacy</Link> · <Link href="/hi/help">हिंदी गाइड</Link>
+      </p>
     </main>
   )
 }

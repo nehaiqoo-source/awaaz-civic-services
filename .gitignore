@@ -25,3 +25,11 @@ mobile/android/local.properties
 public/ort
 *.apk
 .DS_Store
+
+android/keystore.properties
+mobile/android/keystore.properties
+*.jks
+*.keystore
+!debug.keystore
+*.aab
+mobile/android/.kotlin

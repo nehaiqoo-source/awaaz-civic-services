@@ -136,3 +136,8 @@ On the live site, a complaint was submitted, a photo uploaded and the status che
 - Only the main page is scanned. Forms inside iframes, shadow DOM, canvas widgets, and multi-step wizards that re-render fields need a re-scan, which is not automatic yet.
 - Custom widgets (dropdowns that are not `<select>`, date pickers that are not `<input type=date>`) are not understood.
 - `/grievance` stores complaints and forwards them nowhere.
+
+## SEO and Play Store
+
+- **SEO:** canonical URLs, `sitemap.xml`, `robots.txt`, Open Graph image, JSON-LD, and 12 help guides in English (`/help/...`) and Hindi (`/hi/help/...`) with hreflang. Guides take their links and document lists from the closed Saathi catalog, and use no helpline numbers or timelines. To verify the site in Google Search Console, set `GOOGLE_SITE_VERIFICATION` in Vercel. No search-volume data is bundled; check keywords in Keyword Planner and Search Console.
+- **Play Store:** see `store/play/` (`RELEASE.md`, `LISTING.md`, `DATA_SAFETY.md`, graphics). The signed bundle and the upload key stay out of git. Privacy policy: `/privacy`.

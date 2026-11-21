@@ -21,7 +21,8 @@ interface WebViewHandle {
 const WebView = RNWebView as unknown as ComponentType<WebViewProps & { ref?: Ref<WebViewHandle> }>
 
 /** Emulator default (Android maps the host machine to 10.0.2.2). Real devices need your deployed HTTPS address. */
-const DEFAULT_API_BASE = process.env.EXPO_PUBLIC_API_BASE ?? 'http://10.0.2.2:3000'
+// Release builds talk to the live server; the emulator address is for development only.
+const DEFAULT_API_BASE = process.env.EXPO_PUBLIC_API_BASE ?? (__DEV__ ? 'http://10.0.2.2:3000' : 'https://www.awaaz.help')
 const ARM_TIMEOUT_MS = 10 * 60 * 1000
 
 /** Runs before page scripts: lets the overlay find the native bridge. */

@@ -1,6 +1,12 @@
 import { GrievanceFlow } from '@/components/GrievanceFlow'
 import { TrackForm } from '@/components/TrackForm'
 
+export const metadata = {
+  title: 'File a complaint by voice and get a tracking ID',
+  description: 'Speak your problem (road, water, garbage, power, ration). Add a photo and location if you want. Get a tracking ID.',
+  alternates: { canonical: '/grievance' },
+}
+
 export default function GrievancePage() {
   return (
     <main>

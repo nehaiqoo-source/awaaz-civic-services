@@ -1,6 +1,10 @@
 import Link from 'next/link'
 
-export const metadata = { title: 'Get Awaaz on your device · Awaaz' }
+export const metadata = {
+  title: 'Get Awaaz on Android, iPhone, Mac, Windows or as a browser extension',
+  description: 'Install Awaaz as an app or add the Chrome and Firefox extension to fill government forms by voice.',
+  alternates: { canonical: '/install' },
+}
 
 const platforms = [
   {

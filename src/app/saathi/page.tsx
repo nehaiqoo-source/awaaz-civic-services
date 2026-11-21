@@ -1,6 +1,10 @@
 import { SaathiFlow } from '@/components/SaathiFlow'
 
-export const metadata = { title: 'Awaaz Saathi · Which service do I need?' }
+export const metadata = {
+  title: 'Saathi: say your problem, find the right government service',
+  description: 'Not sure which form or portal? Say your problem in Hindi or English and Saathi names the right service, what to keep ready and the official link.',
+  alternates: { canonical: '/saathi' },
+}
 
 export default function SaathiPage() {
   return (

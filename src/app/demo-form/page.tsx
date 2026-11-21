@@ -1,6 +1,8 @@
 import { DemoForm } from '@/components/DemoForm'
 import { LoadAwaazButton } from '@/components/LoadAwaazButton'
 
+export const metadata = { title: 'Demo form', robots: { index: false, follow: true } }
+
 export default function DemoFormPage() {
   return (
     <main>

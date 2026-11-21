@@ -22,7 +22,7 @@ WHAT YOU CAN DO
 • Say commands like "scroll down" or "open Track complaint".
 
 BUILT TO BE SAFE
-• No account, no sign-up, no ads, no tracking.
+• It is free and needs no account. There are no ads and no tracking.
 • Awaaz never fills passwords, OTPs, Aadhaar, PAN or bank numbers. You type those yourself.
 • Awaaz never presses Submit for you.
 • The microphone is used only while you tap and speak.
@@ -56,7 +56,7 @@ Awaaz हर सवाल ज़ोर से पढ़ता है, हिं�
 • "नीचे जाओ" या "Track complaint खोलो" जैसे आदेश बोलें।
 
 सुरक्षा का पूरा ध्यान
-• कोई अकाउंट नहीं, कोई साइन-अप नहीं, कोई विज्ञापन या ट्रैकिंग नहीं।
+• यह मुफ़्त है और अकाउंट नहीं माँगता। कोई विज्ञापन या ट्रैकिंग नहीं है।
 • Awaaz पासवर्ड, OTP, आधार, PAN या बैंक नंबर कभी नहीं भरता। वे आप खुद टाइप करते हैं।
 • Awaaz आपके लिए Submit कभी नहीं दबाता।
 • माइक्रोफ़ोन सिर्फ़ तब चलता है जब आप दबाकर बोलते हैं।

@@ -118,7 +118,7 @@ Limits: in the mobile app the native side proxies `/api/act` (bridge message `ac
 npm test && npm run typecheck && npm run lint && npm run build
 ```
 
-151 tests cover voice commands, permissions and policy, the normalizers, sensitive-field rules, server fill logic, form scanning and filling in jsdom, the native host controller, mobile URL and API rules, the full guided session (overlay and server logic with a fake voice), panel UI, extension manifests, API-base rules, the grievance flow, Saathi matching and catalog rules, photo and EXIF checks, and the Blob repository with a fake client.
+165 tests cover voice commands, permissions and policy, the normalizers, sensitive-field rules, server fill logic, form scanning and filling in jsdom, the native host controller, mobile URL and API rules, the full guided session (overlay and server logic with a fake voice), panel UI, extension manifests, API-base rules, the grievance flow, Saathi matching, chat and catalog rules, SEO pages and sitemap, photo and EXIF checks, and the Blob repository with a fake client.
 
 The demo form was also filled end to end in headless Chromium against the production build, at desktop and 390x800 phone sizes, with browser speech APIs replaced by a script. That covered React-controlled inputs, a select, a radio, a checkbox and a date, with Aadhaar left empty.
 
@@ -139,6 +139,6 @@ On the live site, a complaint was submitted, a photo uploaded and the status che
 
 ## SEO and Play Store
 
-- **SEO:** canonical URLs, `sitemap.xml`, `robots.txt`, Open Graph image, JSON-LD, and 12 help guides in English (`/help/...`) and Hindi (`/hi/help/...`) with hreflang. Guides take their links and document lists from the closed Saathi catalog, and use no helpline numbers or timelines. To verify the site in Google Search Console, set `GOOGLE_SITE_VERIFICATION` in Vercel. No search-volume data is bundled; check keywords in Keyword Planner and Search Console.
-- **Play Store:** see `store/play/` (`RELEASE.md`, `LISTING.md`, `DATA_SAFETY.md`, graphics). The signed bundle and the upload key stay out of git. Privacy policy: `/privacy`.
-- **Saathi chat:** `/saathi` is now a chat. It asks at most two short questions (for example which kind of pension) and then shows services from the closed catalog. It is rule-based, with no AI and no network call, so it cannot invent a link or number. Logic: `src/lib/saathi/chat.ts`. Added CPENGRAMS and EPFO to the catalog (both URLs returned HTTP 200 on 2026-11-21).
+- SEO: canonical URLs, `sitemap.xml`, `robots.txt`, Open Graph image, JSON-LD, and 17 help guides in English (`/help/...`) and Hindi (`/hi/help/...`) with hreflang. Guides take their links and document lists from the closed Saathi catalog, and use no helpline numbers or timelines. To verify the site in Google Search Console, set `GOOGLE_SITE_VERIFICATION` in Vercel. No search-volume data is bundled; check keywords in Keyword Planner and Search Console.
+- Play Store: see `store/play/` (`RELEASE.md`, `LISTING.md`, `DATA_SAFETY.md`, graphics). The signed bundle and the upload key stay out of git. Privacy policy: `/privacy`.
+- Saathi chat: `/saathi` is now a chat. It asks at most two short questions (for example which kind of pension) and then shows services from the closed catalog. It is rule-based, with no AI and no network call, so it cannot invent a link or number. Logic: `src/lib/saathi/chat.ts`. Added CPENGRAMS and EPFO to the catalog (both URLs returned HTTP 200 on 2026-11-21).

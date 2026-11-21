@@ -35,8 +35,8 @@ export const GUIDES: readonly Guide[] = [
     serviceId: 'cpgrams',
     title: { en: 'Pension has not come: how to complain', hi: 'पेंशन नहीं आई: शिकायत कैसे करें' },
     description: {
-      en: 'Pension not credited? What to keep ready and where to complain, explained in simple words. Speak your problem and Awaaz helps you fill the form.',
-      hi: 'पेंशन खाते में नहीं आई? क्या तैयार रखें और शिकायत कहाँ करें, आसान भाषा में। बोलकर अपनी समस्या बताइए, Awaaz फॉर्म भरने में मदद करता है।',
+      en: 'Pension not credited? What to keep ready and where to complain. Speak your problem and Awaaz helps you fill the form.',
+      hi: 'पेंशन खाते में नहीं आई? क्या तैयार रखें और शिकायत कहाँ करें। बोलकर अपनी समस्या बताइए, Awaaz फॉर्म भरने में मदद करता है।',
     },
     intro: {
       en: 'If your pension has stopped or is late, first check with the bank or the office that pays it. If nobody helps, you can send a complaint to the government through the grievance portal. Which office handles it depends on the kind of pension (central, state or provident fund), so name the scheme or office in your complaint.',
@@ -93,8 +93,8 @@ export const GUIDES: readonly Guide[] = [
     serviceId: 'awaaz-local-complaint',
     title: { en: 'Pothole or broken road: how to complain', hi: 'सड़क पर गड्ढा: शिकायत कैसे करें' },
     description: {
-      en: 'Pothole in your street? Say it once, add a photo and location, and get a tracking ID. Explained simply, in Hindi and English.',
-      hi: 'आपकी गली में गड्ढा है? एक बार बोलिए, फोटो और जगह जोड़िए और ट्रैकिंग ID पाइए। हिंदी और अंग्रेज़ी में आसान तरीका।',
+      en: 'Pothole in your street? Say it once, add a photo and location, and get a tracking ID.',
+      hi: 'आपकी गली में गड्ढा है? एक बार बोलिए, फोटो और जगह जोड़िए और ट्रैकिंग ID पाइए।',
     },
     intro: {
       en: 'Roads are looked after by your city, town or village body, and the office differs from place to place. A complaint with a photo and the exact spot is easier to act on. Awaaz writes the complaint from what you say and gives you a tracking ID.',
@@ -120,8 +120,8 @@ export const GUIDES: readonly Guide[] = [
     serviceId: 'awaaz-local-complaint',
     title: { en: 'Blocked drain or garbage: how to complain', hi: 'नाली जाम या कचरा: शिकायत कैसे करें' },
     description: {
-      en: 'Drain blocked or garbage not picked up? Say it once and get a tracking ID. Simple steps in Hindi and English.',
-      hi: 'नाली जाम है या कचरा नहीं उठ रहा? एक बार बोलिए और ट्रैकिंग ID पाइए। हिंदी और अंग्रेज़ी में आसान तरीका।',
+      en: 'Drain blocked or garbage not picked up? Say it once and get a tracking ID.',
+      hi: 'नाली जाम है या कचरा नहीं उठ रहा? एक बार बोलिए और ट्रैकिंग ID पाइए।',
     },
     intro: {
       en: 'Drains and garbage are handled by your local body. Say where it is, how long it has been like this, and whether it is a health risk. Awaaz writes it up so you do not have to.',
@@ -142,8 +142,8 @@ export const GUIDES: readonly Guide[] = [
     serviceId: 'awaaz-local-complaint',
     title: { en: 'No water or no electricity: how to complain', hi: 'पानी या बिजली नहीं आ रही: शिकायत कैसे करें' },
     description: {
-      en: 'Water supply or power cut problem in your area? Say it once and get a tracking ID. Plain steps in Hindi and English.',
-      hi: 'आपके इलाके में पानी या बिजली की दिक्कत है? एक बार बोलिए और ट्रैकिंग ID पाइए। हिंदी और अंग्रेज़ी में आसान तरीका।',
+      en: 'Water supply or power cut problem in your area? Say it once and get a tracking ID.',
+      hi: 'आपके इलाके में पानी या बिजली की दिक्कत है? एक बार बोलिए और ट्रैकिंग ID पाइए।',
     },
     intro: {
       en: 'Water and power are supplied by different offices depending on where you live. Say what is wrong, since when, and who else on your street is affected. Awaaz turns it into a complaint with a tracking ID.',
@@ -349,8 +349,8 @@ export const GUIDES: readonly Guide[] = [
     serviceId: 'cpgrams',
     title: { en: 'Old age or widow pension stopped: what to do', hi: 'वृद्धा या विधवा पेंशन बंद हो गई: क्या करें' },
     description: {
-      en: 'Old age, widow or other scheme pension stopped or not coming? What to check first and where to complain, in simple words.',
-      hi: 'वृद्धा, विधवा या दूसरी योजना की पेंशन बंद हो गई या नहीं आ रही? पहले क्या देखें और शिकायत कहाँ करें, आसान भाषा में।',
+      en: 'Old age, widow or other scheme pension stopped or not coming? What to check first and where to complain.',
+      hi: 'वृद्धा, विधवा या दूसरी योजना की पेंशन बंद हो गई या नहीं आ रही? पहले क्या देखें और शिकायत कहाँ करें।',
     },
     intro: {
       en: 'These pensions are run by your state, so the rules differ. Check three things first: whether the money went to a different or closed bank account, whether your Aadhaar or bank details need to be linked or updated, and whether a yearly life or identity check is pending. If none of that explains it, send a complaint and name the scheme.',

@@ -42,6 +42,8 @@ export const ALLOWED_HOSTS = [
   'swachhbharatmission.ddws.gov.in',
   'www.india.gov.in',
   'igod.gov.in',
+  'pensionersportal.gov.in',
+  'www.epfindia.gov.in',
 ] as const
 
 /**
@@ -285,6 +287,34 @@ export const SERVICES: readonly Service[] = [
     documents: { en: ['Aadhaar', 'Bank account details', 'Household and village details'], hi: ['आधार', 'बैंक खाते की जानकारी', 'घर और गाँव की जानकारी'] },
     url: 'https://swachhbharatmission.ddws.gov.in/',
     keywords: ['shauchalay', 'शौचालय', 'toilet', 'latrine', 'swachh bharat', 'स्वच्छ भारत', 'open defecation', 'safai', 'सफाई', 'sanitation'],
+    verifiedOn: VERIFIED_ON,
+  },
+  {
+    id: 'cpengrams',
+    kind: 'official',
+    category: 'ration_welfare',
+    name: { en: 'Central government pensioners: pension complaint (CPENGRAMS)', hi: 'केंद्र सरकार के पेंशनर: पेंशन शिकायत (CPENGRAMS)' },
+    why: {
+      en: 'For people who retired from a central government job and have a problem with their pension, for example it has stopped or is wrong.',
+      hi: 'जो लोग केंद्र सरकार की नौकरी से रिटायर हुए हैं और पेंशन में दिक्कत है, जैसे रुक गई या गलत आ रही है।',
+    },
+    documents: { en: ['PPO number', 'Bank account details', 'Mobile number', 'Details of the problem'], hi: ['PPO नंबर', 'बैंक खाते की जानकारी', 'मोबाइल नंबर', 'समस्या की जानकारी'] },
+    url: 'https://pensionersportal.gov.in/',
+    keywords: ['cpengrams', 'ppo', 'central pension', 'central government pension', 'retired', 'retirement', 'pensioner', 'pensioners', 'पेंशनर', 'रिटायर', 'सेवानिवृत्त', 'ppo number'],
+    verifiedOn: VERIFIED_ON,
+  },
+  {
+    id: 'epfo',
+    kind: 'official',
+    category: 'ration_welfare',
+    name: { en: 'Provident fund (EPFO) and EPFO pension', hi: 'भविष्य निधि (EPFO) और EPFO पेंशन' },
+    why: {
+      en: 'For provident fund (PF) money and the pension paid from a private or company job through EPFO.',
+      hi: 'निजी या कंपनी की नौकरी की भविष्य निधि (PF) और EPFO से मिलने वाली पेंशन के लिए।',
+    },
+    documents: { en: ['UAN (universal account number)', 'PPO number, if you get a pension', 'Bank account details'], hi: ['UAN (यूनिवर्सल अकाउंट नंबर)', 'PPO नंबर, अगर पेंशन मिलती है', 'बैंक खाते की जानकारी'] },
+    url: 'https://www.epfindia.gov.in/',
+    keywords: ['epfo', 'pf', 'provident fund', 'uan', 'eps', 'pf nikalna', 'pf withdrawal', 'पीएफ', 'भविष्य निधि', 'ईपीएफओ', 'company pension', 'private job pension'],
     verifiedOn: VERIFIED_ON,
   },
 ]

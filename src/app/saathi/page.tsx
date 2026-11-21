@@ -1,3 +1,4 @@
+import { SaathiChat } from '@/components/SaathiChat'
 import { SaathiFlow } from '@/components/SaathiFlow'
 
 export const metadata = {
@@ -17,7 +18,11 @@ export default function SaathiPage() {
           government service, tells you what to keep ready, and helps you fill it by voice.
         </p>
       </header>
-      <SaathiFlow />
+      <SaathiChat />
+      <details className="card classic">
+        <summary>Prefer one long message? Use the classic box · एक बार में लिखना है?</summary>
+        <SaathiFlow />
+      </details>
     </main>
   )
 }

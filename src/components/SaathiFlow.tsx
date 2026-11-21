@@ -130,7 +130,7 @@ export function SaathiFlow() {
   )
 }
 
-function ServiceCard({ service, best, onHandOver }: { service: Service; best: boolean; onHandOver: () => void }) {
+export function ServiceCard({ service, best, onHandOver }: { service: Service; best: boolean; onHandOver: () => void }) {
   const safe = isAllowedServiceUrl(service.url)
   return (
     <article className={`service ${best ? 'service-best' : ''}`}>

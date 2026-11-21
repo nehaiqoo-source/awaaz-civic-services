@@ -344,6 +344,126 @@ export const GUIDES: readonly Guide[] = [
       hi: ['ई-श्रम कार्ड कैसे बनाएँ', 'ई श्रम रजिस्ट्रेशन', 'मज़दूर कार्ड ऑनलाइन'],
     },
   },
+  {
+    slug: 'vridha-vidhwa-pension-band-ho-gayi',
+    serviceId: 'cpgrams',
+    title: { en: 'Old age or widow pension stopped: what to do', hi: 'वृद्धा या विधवा पेंशन बंद हो गई: क्या करें' },
+    description: {
+      en: 'Old age, widow or other scheme pension stopped or not coming? What to check first and where to complain, in simple words.',
+      hi: 'वृद्धा, विधवा या दूसरी योजना की पेंशन बंद हो गई या नहीं आ रही? पहले क्या देखें और शिकायत कहाँ करें, आसान भाषा में।',
+    },
+    intro: {
+      en: 'These pensions are run by your state, so the rules differ. Check three things first: whether the money went to a different or closed bank account, whether your Aadhaar or bank details need to be linked or updated, and whether a yearly life or identity check is pending. If none of that explains it, send a complaint and name the scheme.',
+      hi: 'ये पेंशन आपके राज्य की होती हैं, इसलिए नियम अलग-अलग हैं। पहले तीन बातें देखें: पैसा किसी दूसरे या बंद बैंक खाते में तो नहीं गया, आधार या बैंक की जानकारी जुड़वानी या सुधरवानी तो नहीं है, और सालाना जीवन या पहचान की जाँच बाकी तो नहीं है। इनसे वजह न मिले तो योजना का नाम लिखकर शिकायत भेजें।',
+    },
+    steps: {
+      en: ['Check your passbook and ask the bank whether any money came in.', 'Ask the office that runs your state’s pension scheme if a form or check is pending.', sayAndSave.en, 'Open the official portal from the button below and submit it yourself.', keepNumber.en],
+      hi: ['पासबुक देखें और बैंक से पूछें कि कोई पैसा आया या नहीं।', 'अपने राज्य की पेंशन योजना चलाने वाले दफ़्तर से पूछें कि कोई फॉर्म या जाँच बाकी है क्या।', sayAndSave.hi, 'नीचे के बटन से सरकारी पोर्टल खोलें और खुद जमा करें।', keepNumber.hi],
+    },
+    faqs: [
+      {
+        q: { en: 'Which office decides this?', hi: 'यह कौन सा दफ़्तर तय करता है?' },
+        a: { en: 'It depends on your state’s scheme. Name the scheme and your district in the complaint.', hi: 'यह आपके राज्य की योजना पर निर्भर है। शिकायत में योजना का नाम और अपना ज़िला लिखें।' },
+      },
+    ],
+    keywords: {
+      en: ['vridha pension band ho gayi', 'old age pension stopped', 'widow pension not coming', 'vidhwa pension nahi aa rahi'],
+      hi: ['वृद्धा पेंशन बंद हो गई', 'विधवा पेंशन नहीं आ रही', 'पेंशन बंद क्या करें', 'वृद्धावस्था पेंशन शिकायत'],
+    },
+  },
+  {
+    slug: 'form-bharna-nahi-aata',
+    serviceId: null,
+    title: { en: 'Cannot read or fill a form? Fill it by speaking', hi: 'फॉर्म भरना नहीं आता? बोलकर भरें' },
+    description: {
+      en: 'If you cannot read or type a long form, speak your answers and Awaaz fills it for you. Free, no account. A helper app for people who find forms hard.',
+      hi: 'अगर लंबा फॉर्म पढ़ना या टाइप करना नहीं आता, तो बोलकर जवाब दीजिए और Awaaz फॉर्म भर देता है। मुफ़्त, बिना अकाउंट। जिन्हें फॉर्म मुश्किल लगते हैं उनके लिए।',
+    },
+    intro: {
+      en: 'Many people can speak clearly but find forms hard to read or type. Awaaz asks each question aloud and fills in your spoken answer. You can also ask a family member to sit with you: you speak, and you both check the filled form before you press Submit.',
+      hi: 'कई लोग साफ़ बोल लेते हैं पर फॉर्म पढ़ना या टाइप करना उन्हें मुश्किल लगता है। Awaaz हर सवाल ज़ोर से पूछता है और आपका बोला हुआ जवाब भर देता है। परिवार का कोई सदस्य साथ बैठ सकता है: आप बोलें और Submit दबाने से पहले दोनों भरा हुआ फॉर्म जाँच लें।',
+    },
+    steps: {
+      en: ['Install Awaaz on your phone (see the install page).', 'Open the form you need.', 'Tap Awaaz and speak your answers one by one.', 'Check the filled form with someone you trust, then press Submit yourself.'],
+      hi: ['अपने फोन पर Awaaz इंस्टॉल करें (Install पेज देखें)।', 'जो फॉर्म चाहिए उसे खोलें।', 'Awaaz दबाएँ और एक-एक करके जवाब बोलें।', 'किसी भरोसेमंद व्यक्ति के साथ भरा हुआ फॉर्म जाँचें, फिर Submit खुद दबाएँ।'],
+    },
+    faqs: [
+      {
+        q: { en: 'Can someone steal my details?', hi: 'क्या कोई मेरी जानकारी चुरा सकता है?' },
+        a: { en: 'Awaaz never asks for passwords, OTPs, Aadhaar, PAN or bank numbers. You type those yourself. Read the privacy page for details.', hi: 'Awaaz पासवर्ड, OTP, आधार, PAN या बैंक नंबर कभी नहीं माँगता। वे आप खुद टाइप करते हैं। विस्तार के लिए गोपनीयता पेज पढ़ें।' },
+      },
+    ],
+    keywords: {
+      en: ['form bharna nahi aata', 'app to fill form for illiterate', 'help filling government form', 'voice app for people who cannot read'],
+      hi: ['फॉर्म भरना नहीं आता', 'अनपढ़ के लिए फॉर्म भरने वाला ऐप', 'सरकारी फॉर्म भरने में मदद', 'बोलकर फॉर्म भरने वाला ऐप'],
+    },
+  },
+  {
+    slug: 'cpgrams-complaint-status-kaise-dekhe',
+    serviceId: 'cpgrams',
+    title: { en: 'How to check your government complaint status', hi: 'सरकारी शिकायत की स्थिति कैसे देखें' },
+    description: {
+      en: 'Filed a complaint on the government grievance portal? Keep the registration number and use it to check what happened.',
+      hi: 'सरकारी शिकायत पोर्टल पर शिकायत की थी? रजिस्ट्रेशन नंबर संभालकर रखें और उसी से स्थिति देखें।',
+    },
+    intro: {
+      en: 'When you submit a complaint on the portal you get a registration number. That number is how you follow up, so write it down or photograph it the same minute. The status is checked on the official portal itself.',
+      hi: 'पोर्टल पर शिकायत जमा करते ही आपको एक रजिस्ट्रेशन नंबर मिलता है। आगे पूछताछ इसी नंबर से होती है, इसलिए उसी समय उसे लिख लें या फोटो ले लें। स्थिति सरकारी पोर्टल पर ही देखी जाती है।',
+    },
+    steps: {
+      en: ['Find the registration number you noted when you filed.', 'Open the official portal from the button below.', 'Look for the option to check status and enter that number.', 'If nothing has moved for a long time, you can send a reminder or file again, naming the earlier number.'],
+      hi: ['शिकायत करते समय जो रजिस्ट्रेशन नंबर लिखा था उसे ढूँढें।', 'नीचे के बटन से सरकारी पोर्टल खोलें।', 'स्थिति देखने का विकल्प ढूँढें और वही नंबर डालें।', 'बहुत समय तक कुछ न हो तो याद दिलाएँ या पुराना नंबर लिखकर दोबारा शिकायत करें।'],
+    },
+    faqs: [],
+    keywords: {
+      en: ['cpgrams complaint status', 'check grievance status online', 'shikayat ka status kaise dekhe'],
+      hi: ['शिकायत की स्थिति कैसे देखें', 'CPGRAMS स्टेटस', 'शिकायत नंबर से स्टेटस'],
+    },
+  },
+  {
+    slug: 'aadhaar-update-kaise-kare',
+    serviceId: 'aadhaar',
+    title: { en: 'Update your Aadhaar address or mobile number', hi: 'आधार में पता या मोबाइल नंबर कैसे बदलें' },
+    description: {
+      en: 'Where to update or download your Aadhaar and what to keep ready. Awaaz never asks for your Aadhaar number.',
+      hi: 'आधार अपडेट या डाउनलोड कहाँ करें और क्या तैयार रखें। Awaaz आपका आधार नंबर कभी नहीं माँगता।',
+    },
+    intro: {
+      en: 'The official myAadhaar site is where you update an address, download your Aadhaar or check the status of an update. You will need to type your own Aadhaar number and the OTP yourself: Awaaz does not fill those.',
+      hi: 'आधार का पता बदलना, आधार डाउनलोड करना या अपडेट की स्थिति देखना सरकारी myAadhaar साइट पर होता है। अपना आधार नंबर और OTP आपको खुद टाइप करना होगा: Awaaz इन्हें नहीं भरता।',
+    },
+    steps: {
+      en: ['Keep the documents below ready.', 'Open the official site from the button below.', 'Type your Aadhaar number and OTP yourself.', keepNumber.en],
+      hi: ['नीचे लिखे काग़ज़ तैयार रखें।', 'नीचे के बटन से सरकारी साइट खोलें।', 'अपना आधार नंबर और OTP खुद टाइप करें।', keepNumber.hi],
+    },
+    faqs: [],
+    keywords: {
+      en: ['aadhaar address update online', 'aadhaar mobile number change', 'download aadhaar'],
+      hi: ['आधार में पता बदलें', 'आधार मोबाइल नंबर अपडेट', 'आधार डाउनलोड कैसे करें'],
+    },
+  },
+  {
+    slug: 'esanjeevani-online-doctor',
+    serviceId: 'esanjeevani',
+    title: { en: 'Talk to a doctor online for free (e-Sanjeevani)', hi: 'मुफ़्त ऑनलाइन डॉक्टर से बात करें (ई-संजीवनी)' },
+    description: {
+      en: 'Government online doctor consultation from home. What to keep ready and where to start. For emergencies, go to the nearest hospital.',
+      hi: 'घर बैठे सरकारी ऑनलाइन डॉक्टर परामर्श। क्या तैयार रखें और कहाँ से शुरू करें। आपातकाल में नज़दीकी अस्पताल जाएँ।',
+    },
+    intro: {
+      en: 'e-Sanjeevani lets you talk to a doctor by video or call without travelling. It is not for emergencies. If it is serious, go to the nearest hospital.',
+      hi: 'ई-संजीवनी से आप बिना सफ़र किए वीडियो या कॉल पर डॉक्टर से बात कर सकते हैं। यह आपातकाल के लिए नहीं है। हालत गंभीर हो तो नज़दीकी अस्पताल जाएँ।',
+    },
+    steps: {
+      en: ['If it is an emergency, go to the nearest hospital now.', 'Keep the items below ready.', 'Open the official site from the button below.', 'Follow the steps to register and wait for the doctor.'],
+      hi: ['आपातकाल हो तो अभी नज़दीकी अस्पताल जाएँ।', 'नीचे लिखी चीज़ें तैयार रखें।', 'नीचे के बटन से सरकारी साइट खोलें।', 'रजिस्टर करने के चरण पूरे करें और डॉक्टर का इंतज़ार करें।'],
+    },
+    faqs: [],
+    keywords: {
+      en: ['esanjeevani online doctor', 'free online doctor consultation india', 'government telemedicine'],
+      hi: ['ई-संजीवनी ऑनलाइन डॉक्टर', 'मुफ़्त डॉक्टर परामर्श ऑनलाइन', 'घर बैठे डॉक्टर से बात'],
+    },
+  },
 ]
 
 export function getGuide(slug: string): Guide | undefined {

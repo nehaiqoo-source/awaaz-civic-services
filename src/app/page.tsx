@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { SITE_URL } from '@/lib/site'
+import { GUIDES, guidePath } from '@/lib/seo/guides'
 
 const JSON_LD = {
   '@context': 'https://schema.org',
@@ -43,6 +44,9 @@ export default function Home() {
           Speak in your own language. Awaaz asks each question aloud, listens, and fills the form for you. You check it and press
           Submit yourself. Beyond forms, say &ldquo;scroll down&rdquo; or &ldquo;open Track complaint&rdquo; and it does it, only with the
           permissions you give.
+        </p>
+        <p className="lede" lang="hi">
+          अपनी भाषा में बोलिए, Awaaz सरकारी फॉर्म भर देता है और शिकायत दर्ज करने में मदद करता है। पेंशन नहीं आई, सड़क पर गड्ढा, राशन की दिक्कत: बोलकर बताइए।
         </p>
         <div className="cta-row">
           <Link className="cta cta-primary" href="/demo-form">Try the demo →</Link>
@@ -109,6 +113,21 @@ export default function Home() {
         </p>
         <p className="note">
           Desktop: load the Chrome/Edge extension from <code>extension/dist/chrome</code> (see README).
+        </p>
+      </section>
+
+      <section className="card" aria-labelledby="guides">
+        <h2 id="guides">Popular guides · लोकप्रिय गाइड</h2>
+        <ul className="links">
+          {GUIDES.slice(0, 6).map((g) => (
+            <li key={g.slug}>
+              <Link href={guidePath(g.slug, 'en')}>{g.title.en}</Link>
+              <span lang="hi">{g.title.hi}</span>
+            </li>
+          ))}
+        </ul>
+        <p className="note">
+          <Link href="/help">All guides</Link> · <Link href="/hi/help">सभी गाइड (हिंदी)</Link>
         </p>
       </section>
 

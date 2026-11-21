@@ -11,7 +11,7 @@ export default function GrievancePage() {
   return (
     <main>
       <header className="hero">
-        <p className="eyebrow">Demo · Grievance filing</p>
+        <p className="eyebrow">Grievance filing · शिकायत दर्ज करें</p>
         <h1>File a complaint by voice</h1>
         <p className="lede">
           No forms. Speak your problem in your own language and we turn it into a complaint you can track.

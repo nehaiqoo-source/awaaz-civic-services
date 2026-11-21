@@ -23,6 +23,13 @@ const WebView = RNWebView as unknown as ComponentType<WebViewProps & { ref?: Ref
 /** Emulator default (Android maps the host machine to 10.0.2.2). Real devices need your deployed HTTPS address. */
 // Release builds talk to the live server; the emulator address is for development only.
 const DEFAULT_API_BASE = process.env.EXPO_PUBLIC_API_BASE ?? (__DEV__ ? 'http://10.0.2.2:3000' : 'https://www.awaaz.help')
+/** Home screen shortcuts: pages of the Awaaz site, opened in the built-in browser. */
+const SHORTCUTS = [
+  { path: '/saathi', en: 'Not sure which service? Ask Saathi', hi: 'कौन सी सेवा चाहिए? साथी से पूछें' },
+  { path: '/grievance', en: 'File a complaint by voice', hi: 'बोलकर शिकायत दर्ज करें' },
+  { path: '/help', en: 'Help guides', hi: 'मदद गाइड' },
+  { path: '/demo-form', en: 'Try the demo form', hi: 'डेमो फॉर्म आज़माएँ' },
+] as const
 const ARM_TIMEOUT_MS = 10 * 60 * 1000
 
 /** Runs before page scripts: lets the overlay find the native bridge. */
@@ -210,16 +217,21 @@ function Browser() {
           <Text style={styles.lede}>
             Open any service form here, tap Awaaz, and answer by voice. Awaaz asks each question aloud and fills the form. You press Submit yourself.
           </Text>
-          <Pressable
-            style={styles.chip}
-            accessibilityRole="button"
-            onPress={() => {
-              setAddress(`${apiBase}/demo-form`)
-              setUri(`${apiBase}/demo-form`)
-            }}
-          >
-            <Text style={styles.chipText}>Try the demo form</Text>
-          </Pressable>
+          {SHORTCUTS.map((item) => (
+            <Pressable
+              key={item.path}
+              style={styles.chip}
+              accessibilityRole="button"
+              accessibilityLabel={item.en}
+              onPress={() => {
+                setAddress(`${apiBase}${item.path}`)
+                setUri(`${apiBase}${item.path}`)
+              }}
+            >
+              <Text style={styles.chipText}>{item.en}</Text>
+              <Text style={styles.chipHi}>{item.hi}</Text>
+            </Pressable>
+          ))}
         </View>
       )}
 
@@ -266,8 +278,9 @@ const styles = StyleSheet.create({
   home: { flex: 1, padding: 24, gap: 14, justifyContent: 'center' },
   title: { fontSize: 36, fontWeight: '800', color: INK },
   lede: { fontSize: 17, color: '#5b6475', lineHeight: 24 },
-  chip: { alignSelf: 'flex-start', paddingHorizontal: 16, paddingVertical: 12, borderRadius: 12, borderWidth: 2, borderColor: ACCENT },
+  chip: { alignSelf: 'stretch', paddingHorizontal: 16, paddingVertical: 12, borderRadius: 12, borderWidth: 2, borderColor: ACCENT },
   chipText: { color: ACCENT, fontWeight: '700', fontSize: 16 },
+  chipHi: { color: '#5b6475', fontSize: 14, marginTop: 2 },
   fab: { position: 'absolute', right: 14, bottom: 22, backgroundColor: ACCENT, paddingHorizontal: 18, paddingVertical: 14, borderRadius: 28, elevation: 6 },
   fabText: { color: '#fff', fontWeight: '800', fontSize: 16 },
 })

@@ -184,3 +184,4 @@ label.inline input { width: auto; }
 .site-logo-hi { font-weight: 600; color: var(--muted); }
 .site-header nav { display: flex; gap: 16px; font-weight: 600; font-size: 15px; }
 .site-header nav a { color: var(--accent); text-underline-offset: 3px; }
+.eyebrow a { color: inherit; text-underline-offset: 3px; }

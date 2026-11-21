@@ -1,5 +1,7 @@
 import type { Metadata, Viewport } from 'next'
 import './globals.css'
+import Image from 'next/image'
+import Link from 'next/link'
 import { SITE_URL } from '@/lib/site'
 
 export const metadata: Metadata = {
@@ -29,7 +31,20 @@ export const viewport: Viewport = { width: 'device-width', initialScale: 1, them
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <header className="site-header">
+          <Link href="/" className="site-logo" aria-label="Awaaz home">
+            <Image src="/icon-192.png" alt="" width={36} height={36} priority />
+            <span>Awaaz <span className="site-logo-hi">· आवाज़</span></span>
+          </Link>
+          <nav aria-label="Main">
+            <Link href="/saathi">Saathi</Link>
+            <Link href="/help">Guides</Link>
+            <Link href="/install">Install</Link>
+          </nav>
+        </header>
+        {children}
+      </body>
     </html>
   )
 }

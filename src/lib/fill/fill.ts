@@ -35,7 +35,7 @@ async function fillWithModel(fields: FieldDescriptor[], transcript: string): Pro
   if (!client) return null
   try {
     const message = await client.messages.create({
-      model: process.env.ANTHROPIC_MODEL ?? DEFAULT_MODEL,
+      model: process.env.ANTHROPIC_MODEL || DEFAULT_MODEL,
       max_tokens: 2048,
       system: SYSTEM_PROMPT,
       messages: [

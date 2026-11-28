@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Awaaz pitch deck · India Runs on Voice, Round 2</title>
+<style>
+  @page { size: 1280px 720px; margin: 0; }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, "Segoe UI", Roboto, "Noto Sans", "Noto Sans Devanagari", sans-serif; color: #1c2433; }
+  .slide { width: 1280px; height: 720px; padding: 56px 72px; page-break-after: always; break-after: page; position: relative; overflow: hidden; background: #faf6ee; display: flex; flex-direction: column; gap: 18px; }
+  .slide:last-child { page-break-after: auto; break-after: auto; }
+  .kicker { font-size: 18px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: #c2410c; }
+  h1 { font-size: 64px; line-height: 1.05; margin: 0; }
+  h2 { font-size: 44px; line-height: 1.1; margin: 0; }
+  p, li { font-size: 24px; line-height: 1.4; margin: 0; }
+  ul, ol { margin: 0; padding-left: 28px; display: grid; gap: 10px; }
+  .small, .small li { font-size: 19px; }
+  .src { position: absolute; bottom: 24px; left: 72px; right: 72px; font-size: 14px; color: #5b6475; }
+  .cover { background: linear-gradient(135deg, #ff9933, #c2410c); color: #fff; justify-content: center; }
+  .cover .kicker { color: #fff3e6; }
+  .cover p { font-size: 30px; }
+  .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 36px; }
+  .box { background: #fff; border: 1px solid #e7ddc9; border-radius: 16px; padding: 20px 24px; display: grid; gap: 8px; }
+  .box h3 { margin: 0; font-size: 26px; color: #c2410c; }
+  table { border-collapse: collapse; width: 100%; font-size: 17px; }
+  th, td { text-align: left; vertical-align: top; padding: 8px 10px; border-bottom: 1px solid #e7ddc9; }
+  th { color: #c2410c; font-size: 16px; text-transform: uppercase; letter-spacing: .04em; }
+  .big { font-size: 52px; font-weight: 800; color: #c2410c; }
+  .hi { color: #5b6475; }
+</style>
+</head>
+<body>
+
+<section class="slide cover">
+  <p class="kicker">India Runs on Voice · Civic services track</p>
+  <h1>Awaaz · आवाज़</h1>
+  <p>Civic services: voice-based grievance filling.<br>Public services for people who can't fill a form.</p>
+  <p style="font-size:22px">Live: www.awaaz.help · Code: github.com/nehaiqoo-source/awaaz-civic-services</p>
+</section>
+
+<section class="slide">
+  <p class="kicker">The problem</p>
+  <h2>Public services are reached through forms built for people who can read and type.</h2>
+  <ul>
+    <li>When an old age or widow pension stops, the person has to find the right office or portal and file a complaint. The form is long, usually in English or formal Hindi, and asks for scheme names, offices and reference numbers.</li>
+    <li>India's literacy rate (age 7 and above) is 80.9%, so roughly one person in five aged 7+ cannot read and write. The rate is 77.5% in rural areas and 74.6% for women.</li>
+    <li>Today these people ask a relative, pay someone at a cyber cafe, or give up. The need comes back every time a payment is missed, a ration card changes or a street problem appears.</li>
+  </ul>
+  <p class="src">Source: Periodic Labour Force Survey 2023-24 (NSO, MoSPI), as reported by the Ministry of Education and the press. Figures are for age 7+.</p>
+</section>
+
+<section class="slide">
+  <p class="kicker">Who we build for</p>
+  <h2>People who can explain their problem out loud, but not on a form.</h2>
+  <div class="cols">
+    <div class="box">
+      <h3>First users</h3>
+      <p class="small">Older people, widows and retired workers in villages and small towns, using a basic Android phone. Hindi first, with English words mixed in.</p>
+      <p class="small">The national old age and widow pension schemes alone have ceilings of about 2.21 crore and 0.67 crore beneficiaries.</p>
+    </div>
+    <div class="box">
+      <h3>Why now</h3>
+      <p class="small">India had about 958 million active internet users in 2025; about 548 million (57%) are rural, and rural is growing faster than urban.</p>
+      <p class="small">In 2024, about 1 in 5 internet users used voice commands.</p>
+    </div>
+  </div>
+  <p class="src">Sources: PIB, National Social Assistance Programme (Nov 2025); IAMAI and Kantar, Internet in India 2025 (press coverage) and 2024 report.</p>
+</section>
+
+<section class="slide">
+  <p class="kicker">The solution</p>
+  <h2>Awaaz: say the problem, and it finds the service and fills the form with you.</h2>
+  <div class="cols">
+    <div class="box">
+      <h3>1. Saathi (साथी)</h3>
+      <p class="small">Say "meri pension teen mahine se nahi aayi". Saathi asks at most two short questions (which kind of pension?) and names the right government service, the papers to keep ready and the official link. It is rule-based and picks only from a fixed, checked list, so it cannot invent a link.</p>
+    </div>
+    <div class="box">
+      <h3>2. Fill any form by voice</h3>
+      <p class="small">On a government form, tap Awaaz. It reads each question aloud, listens, fills the field and reads it back. The person checks the form and presses Submit. Works in the Android app, a Chrome/Firefox extension, or a bookmark.</p>
+    </div>
+  </div>
+  <div class="box">
+    <h3>3. Voice complaint with proof</h3>
+    <p class="small">Speak a local complaint (road, water, drain, light), add a photo and location if you want, and get a tracking ID.</p>
+  </div>
+</section>
+
+<section class="slide">
+  <p class="kicker">The core flow (shown in the demo)</p>
+  <h2>From one spoken sentence to a filled form.</h2>
+  <ol class="small">
+    <li>The person taps the microphone and says the problem in Hindi, English or a mix.</li>
+    <li>Saathi asks one follow-up aloud with big buttons: central government pension, PF pension, or a state scheme such as old age or widow pension. The answer can be spoken or tapped.</li>
+    <li>Awaaz shows the right service card, reads it aloud, lists the papers to keep ready and opens the official site.</li>
+    <li>On the form, Awaaz asks each question aloud, listens, fills the field and says it back for confirmation.</li>
+    <li>At the end it reads the whole form back. The person presses Submit. Awaaz never submits for them.</li>
+  </ol>
+  <p class="small">If nothing is heard, it asks again; after repeated failures it offers typing. Passwords, OTPs, Aadhaar, PAN and bank numbers are never filled: the person types those.</p>
+</section>
+
+<section class="slide">
+  <p class="kicker">Why voice comes first</p>
+  <h2>Speaking is the one skill every user already has.</h2>
+  <ul>
+    <li>The blocker is reading the form and typing in a regional script on a small keyboard, not knowing what the problem is.</li>
+    <li>Every step in Awaaz is a question asked aloud and an answer spoken. Typing exists only as a backup.</li>
+    <li>Answers are read back aloud, so a person who cannot read can still check what was filled.</li>
+    <li>The same voice flow works on a phone app, a browser extension and the website.</li>
+  </ul>
+</section>
+
+<section class="slide">
+  <p class="kicker">Trust and safety by design</p>
+  <h2>Built for people who are easy to mislead.</h2>
+  <ul class="small">
+    <li>Never submits a form, never fills passwords, OTPs, Aadhaar, PAN or bank numbers.</li>
+    <li>Services come from a closed catalog of government portals; each link was checked, with a fallback to the national portal india.gov.in.</li>
+    <li>Photos are re-encoded on the device, which removes hidden GPS data. Location is shared only when the person taps for it and is rounded to about 11 metres.</li>
+    <li>Photo description runs on the phone (an open model in the browser), so the photo is not sent to an AI service.</li>
+    <li>No account, no ads, no analytics. Microphone only while the person taps and speaks.</li>
+    <li>Strict browser security headers (CSP, no framing) and rate limits on the server.</li>
+  </ul>
+</section>
+
+<section class="slide">
+  <p class="kicker">What is built today</p>
+  <h2>A working prototype, not a mock-up.</h2>
+  <div class="cols">
+    <ul class="small">
+      <li>Website and installable web app: www.awaaz.help (Saathi chat, voice complaint with tracking ID, demo form, 26 help guides in Hindi and English).</li>
+      <li>Chrome and Firefox extension that fills any website form by voice.</li>
+      <li>Android app (signed release bundle ready for Play internal testing).</li>
+      <li>Runs with <b>docker compose up</b> and starts without any API keys.</li>
+    </ul>
+    <ul class="small">
+      <li>165 automated tests (voice commands, form filling, safety rules, catalog, chat).</li>
+      <li>Honest status: tested in desktop browsers and an Android emulator. Not yet tested with real users or on real low-end phones; the voice recognition quality for regional accents is the main unknown.</li>
+    </ul>
+  </div>
+</section>
+
+<section class="slide">
+  <p class="kicker">Addressable market</p>
+  <h2>Every citizen who needs a public service but cannot fill the form.</h2>
+  <table>
+    <tr><th>Layer</th><th>Size</th><th>Basis</th></tr>
+    <tr><td>Internet users in India</td><td>about 958 million (548 million rural)</td><td>IAMAI and Kantar, 2025</td></tr>
+    <tr><td>People aged 7+ who cannot read and write</td><td>about 1 in 5</td><td>PLFS 2023-24 literacy rate 80.9%</td></tr>
+    <tr><td>Pensioners in two national schemes (beachhead)</td><td>about 2.9 crore (old age and widow ceilings)</td><td>PIB, NSAP, Nov 2025</td></tr>
+    <tr><td>Grievances to central ministries on CPGRAMS</td><td>about 1.4 to 1.6 lakh per month (Sep and Oct 2025)</td><td>DARPG monthly CPGRAMS reports</td></tr>
+    <tr><td>Grievances redressed on CPGRAMS in 2024</td><td>about 26.5 lakh</td><td>DARPG via PIB</td></tr>
+  </table>
+  <p class="small">These are separate indicators, not one number added up. Our first target is a pilot of about 500 people in one Hindi-speaking district.</p>
+</section>
+
+<section class="slide">
+  <p class="kicker">Third-party dependencies and their risks</p>
+  <table>
+    <tr><th>Dependency</th><th>Used for</th><th>Cost</th><th>Risk and our fallback</th></tr>
+    <tr><td>Browser Web Speech API (Google speech in Chrome) and Android speech service</td><td>Speech to text</td><td>Free to us</td><td>Works in Chrome and Edge, not Firefox; needs internet; accuracy for regional accents unproven; terms can change. Fallback: typing. Next: an open on-device Indic speech model.</td></tr>
+    <tr><td>Browser and Android text-to-speech</td><td>Reading questions aloud</td><td>Free</td><td>Voice quality and languages vary by device. Text is always on screen too.</td></tr>
+    <tr><td>Anthropic API (optional)</td><td>Smarter form matching and complaint drafting</td><td>Pay per use</td><td>Cost grows with users; outages. The app works without it using built-in rules and shows "key not set".</td></tr>
+    <tr><td>Vercel hosting and Blob storage</td><td>Website, API, complaint storage</td><td>Free tier, then paid</td><td>Usage limits and vendor lock-in. Fallback: self-host with Docker Compose and a local data volume.</td></tr>
+    <tr><td>Hugging Face CDN, transformers.js, onnxruntime</td><td>On-device photo description (about 90 MB, once)</td><td>Free, open source</td><td>Large download on slow networks; optional feature.</td></tr>
+    <tr><td>Government portals</td><td>Where forms are submitted</td><td>Free</td><td>Links and forms change or go down. Checked catalog with dates and a fallback to india.gov.in.</td></tr>
+    <tr><td>Google Play and Chrome Web Store</td><td>Distribution</td><td>One-time developer fees</td><td>Review policies (for example on WebView apps). The website works without either store.</td></tr>
+  </table>
+</section>
+
+<section class="slide">
+  <p class="kicker">Go-to-market</p>
+  <h2>Reach people through the helpers they already trust.</h2>
+  <div class="cols">
+    <ul class="small">
+      <li><b>Pilot (first 3 months):</b> one district, about 500 users, working with local helpers, pensioner groups and NGOs. Measure: share of forms finished without someone else typing (target 70%), median time under 10 minutes, under 15% of fields corrected at read-back, 40% return within 60 days.</li>
+      <li><b>Search:</b> 26 Hindi and English help guides already answer queries like "pension nahi aayi kya kare".</li>
+    </ul>
+    <ul class="small">
+      <li><b>Distribution:</b> Android app on Play, the browser extension for cyber cafe operators and helpers, and plain web links shared on WhatsApp.</li>
+      <li><b>Free for citizens.</b> Funding through grants and CSR first; later a paid white-label version for municipal bodies and NGOs that run help desks.</li>
+      <li><b>Next features:</b> WhatsApp and phone-call access, more languages, on-device speech recognition, and a way for people to delete their own complaint.</li>
+    </ul>
+  </div>
+</section>
+
+<section class="slide">
+  <p class="kicker">Sources</p>
+  <ul class="small">
+    <li>Literacy (age 7+), PLFS 2023-24, NSO/MoSPI: reported by PIB and press, for example deccanherald.com editorial "Literacy is rising but we can do better".</li>
+    <li>NSAP beneficiaries: PIB document, Nov 2025 (static.pib.gov.in/WriteReadData/specificdocs/documents/2025/nov/doc2025117686801.pdf).</li>
+    <li>CPGRAMS monthly reports, DARPG via PIB: Sep 2025 (doc20251010662101.pdf), Oct 2025 (doc20251110688501.pdf); 2024 redressal total (PIB PRID 2117810).</li>
+    <li>Internet users 2025: IAMAI and Kantar Internet in India 2025, as reported by Business Today (29 Jan 2026) and YourStory.</li>
+    <li>Voice command use (1 in 5 users): IAMAI and Kantar, Internet in India 2024 report (iamai.in).</li>
+  </ul>
+  <p class="small">All pilot numbers in this deck are targets to test, not results.</p>
+</section>
+
+</body>
+</html>

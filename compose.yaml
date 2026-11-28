@@ -1,0 +1,15 @@
+services:
+  awaaz:
+    build: .
+    ports:
+      - "3000:3000"
+    # Optional. Copy .env.example to .env to add keys; the app starts without it.
+    env_file:
+      - path: .env
+        required: false
+    volumes:
+      # Complaints and photos filed locally (used when BLOB_READ_WRITE_TOKEN is not set).
+      - awaaz-data:/app/data
+    restart: unless-stopped
+volumes:
+  awaaz-data:

@@ -58,8 +58,20 @@ The page is untrusted. The native side acts only while the user has switched Awa
 
 ## Run it
 
+### With Docker (recommended)
+
 ```bash
-rm -rf node_modules && npm install   # node_modules in this folder were installed on Linux; reinstall on your machine
+docker compose up --build
+```
+
+Open http://localhost:3000. No `.env` file and no API keys are needed: the app starts, and the AI features say the key is not set and use the built-in rules instead. Complaints filed locally are kept in the `awaaz-data` Docker volume. To add keys, copy `.env.example` to `.env` and fill in only what you need; `.env.example` lists every variable.
+
+Voice needs Chrome or Edge. `localhost` counts as a secure origin, so the microphone works there.
+
+### Without Docker
+
+```bash
+npm install
 cp .env.example .env.local           # optional: set ANTHROPIC_API_KEY for AI mapping (server-side only)
 npm run dev                          # http://localhost:3000
 ```

@@ -4,7 +4,7 @@ import { copyFile, cp, mkdir, readFile, writeFile } from 'node:fs/promises'
 import path from 'node:path'
 
 const root = path.resolve(import.meta.dirname, '..')
-const apiBase = process.env.AWAAZ_API_BASE ?? 'https://awaaz-civic.vercel.app'
+const apiBase = process.env.AWAAZ_API_BASE || 'https://awaaz-civic.vercel.app'
 const common = {
   bundle: true,
   format: 'iife',

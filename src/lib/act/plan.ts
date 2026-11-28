@@ -131,7 +131,7 @@ async function planWithModel(request: ActRequest): Promise<Action[] | null> {
   try {
     const elements = request.elements.map(({ id, role, label, hrefHost, external }) => ({ id, role, label, hrefHost, external }))
     const message = await client.messages.create({
-      model: process.env.ANTHROPIC_MODEL ?? DEFAULT_MODEL,
+      model: process.env.ANTHROPIC_MODEL || DEFAULT_MODEL,
       max_tokens: 1024,
       system: SYSTEM_PROMPT,
       messages: [

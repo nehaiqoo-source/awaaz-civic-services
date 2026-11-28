@@ -222,6 +222,6 @@ let repository: GrievanceRepository | null = null
 export function getRepository(): GrievanceRepository {
   repository ??= process.env.BLOB_READ_WRITE_TOKEN
     ? new BlobGrievanceRepository(vercelBlobClient())
-    : new JsonFileGrievanceRepository(process.env.GRIEVANCE_DATA_FILE ?? path.join(process.cwd(), 'data', 'grievances.json'))
+    : new JsonFileGrievanceRepository(process.env.GRIEVANCE_DATA_FILE || path.join(process.cwd(), 'data', 'grievances.json'))
   return repository
 }

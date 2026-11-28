@@ -41,7 +41,7 @@ export async function describePhoto(jpegBase64: string, language: string): Promi
   if (!ai) return null
   try {
     const message = await ai.messages.create({
-      model: process.env.ANTHROPIC_MODEL ?? DEFAULT_MODEL,
+      model: process.env.ANTHROPIC_MODEL || DEFAULT_MODEL,
       max_tokens: 600,
       system: SYSTEM_PROMPT,
       messages: [

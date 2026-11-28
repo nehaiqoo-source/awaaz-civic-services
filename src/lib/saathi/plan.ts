@@ -53,7 +53,7 @@ async function askModel(transcript: string): Promise<string[] | null> {
   if (!ai) return null
   try {
     const message = await ai.messages.create({
-      model: process.env.ANTHROPIC_MODEL ?? DEFAULT_MODEL,
+      model: process.env.ANTHROPIC_MODEL || DEFAULT_MODEL,
       max_tokens: 200,
       system: SYSTEM_PROMPT,
       messages: [{ role: 'user', content: `<transcript>\n${transcript}\n</transcript>` }],

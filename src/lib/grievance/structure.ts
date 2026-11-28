@@ -44,7 +44,7 @@ export async function structureTranscript(transcript: string): Promise<Structure
 
   try {
     const message = await client.messages.create({
-      model: process.env.ANTHROPIC_MODEL ?? DEFAULT_MODEL,
+      model: process.env.ANTHROPIC_MODEL || DEFAULT_MODEL,
       max_tokens: 1024,
       system: SYSTEM_PROMPT,
       messages: [{ role: 'user', content: `<transcript>\n${transcript}\n</transcript>` }],

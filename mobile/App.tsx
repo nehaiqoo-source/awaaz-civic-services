@@ -22,7 +22,7 @@ const WebView = RNWebView as unknown as ComponentType<WebViewProps & { ref?: Ref
 
 /** Emulator default (Android maps the host machine to 10.0.2.2). Real devices need your deployed HTTPS address. */
 // Release builds talk to the live server; the emulator address is for development only.
-const DEFAULT_API_BASE = process.env.EXPO_PUBLIC_API_BASE ?? (__DEV__ ? 'http://10.0.2.2:3000' : 'https://www.awaaz.help')
+const DEFAULT_API_BASE = process.env.EXPO_PUBLIC_API_BASE || (__DEV__ ? 'http://10.0.2.2:3000' : 'https://www.awaaz.help')
 /** Home screen shortcuts: pages of the Awaaz site, opened in the built-in browser. */
 const SHORTCUTS = [
   { path: '/saathi', en: 'Not sure which service? Ask Saathi', hi: 'कौन सी सेवा चाहिए? साथी से पूछें' },

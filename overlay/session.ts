@@ -28,6 +28,8 @@ export interface SessionDeps {
   lang: string
   /** false = on-device only: answers are validated locally and nothing is sent to the server. Default true. */
   allowServer?: boolean
+  /** The box the person was typing in when they opened Awaaz (see scanForm). */
+  focusTarget?: HTMLElement | null
   onEvent: (event: SessionEvent) => void
 }
 
@@ -69,7 +71,7 @@ export class FillSession {
   }
 
   scan(): ScannedForm {
-    this.scanned = scanForm(this.deps.doc)
+    this.scanned = scanForm(this.deps.doc, this.deps.doc, { focusTarget: this.deps.focusTarget })
     const manual = this.scanned.fields.filter(isSensitiveField).length
     this.emit({
       type: 'scanned',

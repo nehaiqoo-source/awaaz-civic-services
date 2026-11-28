@@ -4,6 +4,7 @@ import type { ConfirmRequest } from './act'
 import { createBridge } from './bridge'
 import { CommandSession, type CommandEvent } from './command-session'
 import { ActionLimiter, Permissions } from './permissions'
+import { resolveFocusTarget } from './scan'
 import { FillSession, type SessionEvent } from './session'
 import { fetchActTransport, fetchTransport, resolveConfig, type ActTransport, type Transport } from './transport'
 import { t } from './i18n'
@@ -157,6 +158,15 @@ export function mount(win: Window = window, options: MountOptions = {}): void {
 
   const host = el(doc, 'div')
   host.id = HOST_ID
+  // Remember the box the person was typing in (e.g. a post on X) so Awaaz writes there, not in some other field.
+  let focusTarget = resolveFocusTarget(doc.activeElement)
+  const onFocusIn = (event: FocusEvent) => {
+    const target = event.target
+    if (!(target instanceof Element) || target === host) return
+    const resolved = resolveFocusTarget(target)
+    if (resolved) focusTarget = resolved
+  }
+  doc.addEventListener('focusin', onFocusIn, true)
   const shadow = host.attachShadow({ mode: 'open' })
   shadow.appendChild(el(doc, 'style', { text: STYLES }))
 
@@ -320,7 +330,15 @@ export function mount(win: Window = window, options: MountOptions = {}): void {
   }
 
   const start = (mode: 'guided' | 'batch') => {
-    session = new FillSession({ doc, voice, transport, lang: langSelect.value, allowServer: !privacyBox.checked, onEvent })
+    session = new FillSession({
+      doc,
+      voice,
+      transport,
+      lang: langSelect.value,
+      allowServer: !privacyBox.checked,
+      focusTarget: focusTarget?.isConnected ? focusTarget : null,
+      onEvent,
+    })
     storeLang(win, langSelect.value)
     storeFlag(win, LOCAL_KEY, privacyBox.checked)
     errorLine.textContent = ''
@@ -470,6 +488,7 @@ export function mount(win: Window = window, options: MountOptions = {}): void {
     settleConfirm(false)
     clearInterval(grantTimer)
     permissions.revoke()
+    doc.removeEventListener('focusin', onFocusIn, true)
     teardown()
   }
   closeButton.addEventListener('click', close)

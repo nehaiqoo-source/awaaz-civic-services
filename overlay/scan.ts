@@ -4,6 +4,8 @@ import type { FieldDescriptor } from '@/lib/fill/schema'
 export type ControlRef =
   | { kind: 'single'; el: HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement }
   | { kind: 'radios'; els: HTMLInputElement[] }
+  /** Rich text boxes (contenteditable), e.g. the post composer on X or a comment box. */
+  | { kind: 'editable'; el: HTMLElement }
 
 export interface ScannedForm {
   fields: FieldDescriptor[]
@@ -90,7 +92,84 @@ function isUsable(el: Control): boolean {
   return !el.disabled && !('readOnly' in el && el.readOnly) && isVisible(el)
 }
 
-export function scanForm(doc: Document, root: ParentNode = doc): ScannedForm {
+const EDITABLE_SELECTOR = '[contenteditable]:not([contenteditable="false"]), [role="textbox"]'
+
+function isEditable(n: HTMLElement): boolean {
+  if (typeof n.isContentEditable === 'boolean') return n.isContentEditable
+  const value = n.getAttribute('contenteditable')
+  return value !== null && value !== 'false'
+}
+
+/** The outermost editable element containing `node`, if any. */
+function editableRoot(node: Element | null): HTMLElement | null {
+  let found: HTMLElement | null = null
+  for (let n: Element | null = node; n; n = n.parentElement) {
+    if (n instanceof HTMLElement && isEditable(n)) found = n
+  }
+  return found
+}
+
+function editableLabel(el: HTMLElement): string {
+  const doc = el.ownerDocument
+  const candidates = [
+    idsToText(doc, el.getAttribute('aria-labelledby')),
+    el.getAttribute('aria-label'),
+    el.getAttribute('data-placeholder'),
+    el.getAttribute('aria-placeholder'),
+    el.getAttribute('title'),
+  ]
+  for (const candidate of candidates) {
+    const text = clean(candidate)
+    if (text) return text
+  }
+  return 'Text'
+}
+
+/** Visible, writable rich text boxes (outermost only, so a composer's inner paragraphs are not counted twice). */
+function scanEditables(root: ParentNode): HTMLElement[] {
+  const out: HTMLElement[] = []
+  for (const candidate of Array.from(root.querySelectorAll<HTMLElement>(EDITABLE_SELECTOR))) {
+    const el = editableRoot(candidate)
+    if (!el || out.includes(el)) continue
+    if (el.getAttribute('aria-disabled') === 'true' || el.getAttribute('aria-readonly') === 'true') continue
+    if (!isVisible(el)) continue
+    out.push(el)
+  }
+  return out
+}
+
+/**
+ * The control the person was typing in when they opened Awaaz, resolved to what the scanner works with:
+ * a form control, or the outermost rich text box.
+ */
+export function resolveFocusTarget(active: Element | null): HTMLElement | null {
+  if (!active) return null
+  if (active instanceof HTMLInputElement || active instanceof HTMLTextAreaElement || active instanceof HTMLSelectElement) return active
+  return editableRoot(active)
+}
+
+export interface ScanOptions {
+  /** The box the person was typing in. A rich text box or textarea becomes the only field; a form input goes first. */
+  focusTarget?: HTMLElement | null
+}
+
+export function scanForm(doc: Document, root: ParentNode = doc, options: ScanOptions = {}): ScannedForm {
+  const all = scanControls(doc, root)
+  const focus = options.focusTarget
+  if (!focus) return all
+  const focusedId = [...all.refs].find(([, ref]) => ref.kind !== 'radios' && ref.el === focus)?.[0]
+  if (!focusedId) return all
+  const field = all.fields.find((f) => f.id === focusedId)
+  const ref = all.refs.get(focusedId)
+  if (!field || !ref) return all
+  // Writing a post or message: fill only that box, never jump to a search bar elsewhere on the page.
+  if (ref.kind === 'editable' || focus instanceof HTMLTextAreaElement) {
+    return { fields: [field], refs: new Map([[focusedId, ref]]) }
+  }
+  return { fields: [field, ...all.fields.filter((f) => f.id !== focusedId)], refs: all.refs }
+}
+
+function scanControls(doc: Document, root: ParentNode): ScannedForm {
   const fields: FieldDescriptor[] = []
   const refs = new Map<string, ControlRef>()
   const radioGroups = new Map<string, HTMLInputElement[]>()
@@ -170,6 +249,13 @@ export function scanForm(doc: Document, root: ParentNode = doc): ScannedForm {
       fields.push({ ...base, type: mapped, maxLength: el.maxLength > 0 ? el.maxLength : undefined })
     }
     refs.set(id, { kind: 'single', el })
+  }
+
+  for (const el of scanEditables(root)) {
+    if (fields.length >= MAX_FIELDS) break
+    const id = nextId()
+    fields.push({ id, type: 'textarea', label: editableLabel(el) })
+    refs.set(id, { kind: 'editable', el })
   }
 
   return { fields, refs }

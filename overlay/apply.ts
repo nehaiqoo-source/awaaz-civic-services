@@ -12,6 +12,27 @@ function setNativeValue(el: TextLike | HTMLSelectElement, value: string): void {
   el.dispatchEvent(new Event('change', { bubbles: true }))
 }
 
+/**
+ * Replaces the text of a rich text box. Editors such as X's composer keep their own model of the text, so
+ * we type through the browser's editing command (as a paste would) instead of setting textContent.
+ */
+function replaceEditableText(el: HTMLElement, value: string): void {
+  const doc = el.ownerDocument
+  el.focus()
+  const selection = doc.getSelection()
+  if (selection) {
+    const range = doc.createRange()
+    range.selectNodeContents(el)
+    selection.removeAllRanges()
+    selection.addRange(range)
+  }
+  const typed = typeof doc.execCommand === 'function' && doc.execCommand(value ? 'insertText' : 'delete', false, value)
+  if (!typed) {
+    el.textContent = value
+    el.dispatchEvent(new InputEvent('input', { bubbles: true, inputType: 'insertText', data: value }))
+  }
+}
+
 function clickRadio(radio: HTMLInputElement): void {
   if (!radio.checked) radio.click()
 }
@@ -29,6 +50,12 @@ export function applyValue(ref: ControlRef, value: string): () => void {
         target.dispatchEvent(new Event('change', { bubbles: true }))
       }
     }
+  }
+
+  if (ref.kind === 'editable') {
+    const before = ref.el.innerText ?? ref.el.textContent ?? ''
+    replaceEditableText(ref.el, value)
+    return () => replaceEditableText(ref.el, before)
   }
 
   const { el } = ref

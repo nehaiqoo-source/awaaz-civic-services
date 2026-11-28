@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Awaaz: voice-based grievance filling",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Civic services for people who can’t fill a form. Speak in your own language and Awaaz fills the page. You always press Submit yourself.",
   "action": {
     "default_title": "Awaaz: fill this page by voice (Alt+Shift+A)",

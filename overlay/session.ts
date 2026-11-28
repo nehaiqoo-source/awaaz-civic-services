@@ -32,6 +32,22 @@ export interface SessionDeps {
 }
 
 const MAX_ATTEMPTS = 3
+/** How long someone may pause mid-answer before we take the answer as finished. */
+const ANSWER_SILENCE_MS = 1800
+
+/** Email addresses are Latin letters: Hindi recognition would write them in Devanagari, so always use English there. */
+export function listenLang(field: FieldDescriptor, lang: string): string {
+  return field.type === 'email' ? 'en-IN' : lang
+}
+
+/** The first heard version that is a valid value for the field (free text accepts the best guess). */
+export function firstValid(field: FieldDescriptor, heard: ReadonlyArray<string>): string | null {
+  for (const text of heard) {
+    const value = validateValue(field, text)
+    if (value !== null) return value
+  }
+  return null
+}
 
 /** Orchestrates scanning, asking, listening, validating (server-side) and filling. UI-agnostic and unit-testable. */
 export class FillSession {
@@ -113,13 +129,16 @@ export class FillSession {
       if (this.stopped || this.skipRequested) return false
 
       let transcript: string
+      let alternatives: string[] = []
       try {
         this.emit({ type: 'listening' })
         this.currentListen = this.deps.voice.listen({
-          lang: this.deps.lang,
+          lang: listenLang(field, this.deps.lang),
+          endSilenceMs: ANSWER_SILENCE_MS,
           onInterim: (text) => this.emit({ type: 'interim', text }),
         })
         transcript = await this.currentListen.result
+        alternatives = this.currentListen.alternatives?.() ?? []
       } catch (error) {
         if (this.stopped || this.skipRequested) return false
         const code = error instanceof VoiceError ? error.code : 'other'
@@ -137,7 +156,8 @@ export class FillSession {
       this.emit({ type: 'heard', text: transcript })
 
       // On-device first: only when the local rules cannot understand the answer does it go to the server (if allowed).
-      let value: string | null = validateValue(field, transcript)
+      // The recogniser's other guesses often hold the right one ("9 8 7" vs "nine ate seven"), so try each.
+      let value: string | null = firstValid(field, [transcript, ...alternatives])
       if (value === null && this.allowServer) {
         try {
           const result = await this.deps.transport({ transcript, language: this.deps.lang, fields: [field] })

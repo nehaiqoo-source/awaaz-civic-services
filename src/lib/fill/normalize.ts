@@ -24,8 +24,13 @@ const DIGIT_WORDS: Record<string, string> = {
   seven: '7', saat: '7', 'सात': '7',
   eight: '8', aath: '8', 'आठ': '8',
   nine: '9', nau: '9', 'नौ': '9',
+  // English digit names as Hindi recognition writes them (people often say numbers in English).
+  'ज़ीरो': '0', 'वन': '1', 'टू': '2', 'थ्री': '3', 'फोर': '4', 'फ़ोर': '4', 'फाइव': '5', 'फ़ाइव': '5', 'सिक्स': '6',
+  'सेवन': '7', 'एट': '8', 'एइट': '8', 'नाइन': '9', 'नाईन': '9',
+  // Sound-alikes English recognition produces for digits. Only used for phone and number fields.
+  won: '1', to: '2', too: '2', tu: '2', for: '4', fore: '4', ate: '8',
 }
-const MULTIPLIERS: Record<string, number> = { double: 2, 'डबल': 2, triple: 3, 'ट्रिपल': 3 }
+const MULTIPLIERS: Record<string, number> = { double: 2, 'डबल': 2, 'दबल': 2, triple: 3, 'ट्रिपल': 3 }
 
 /** Extracts the digit string from speech like "double nine 8 seven ६ ..." (digits and digit words). */
 export function spokenToDigits(text: string): string {
@@ -61,6 +66,16 @@ export function normalizeNumber(text: string): string | null {
   return digits.length > 0 && digits.length <= 15 ? digits : null
 }
 
+/** Common email words as Hindi recognition writes them. */
+const EMAIL_WORDS: ReadonlyArray<readonly [RegExp, string]> = [
+  [/जीमेल|जी मेल/g, 'gmail'],
+  [/याहू/g, 'yahoo'],
+  [/हॉटमेल|हॉट मेल/g, 'hotmail'],
+  [/आउटलुक/g, 'outlook'],
+  [/रेडिफ़?मेल/g, 'rediffmail'],
+  [/कॉम|कोम/g, 'com'],
+]
+
 const EMAIL_REPLACEMENTS: ReadonlyArray<readonly [RegExp, string]> = [
   [/\b(at the rate( of)?|at)\b|एट\s*द\s*रेट|एट/gi, '@'],
   [/\b(dot|period)\b|डॉट|डाट/gi, '.'],
@@ -71,6 +86,7 @@ const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/
 
 export function normalizeEmail(text: string): string | null {
   let value = text.trim().toLowerCase()
+  for (const [pattern, replacement] of EMAIL_WORDS) value = value.replace(pattern, ` ${replacement} `)
   for (const [pattern, replacement] of EMAIL_REPLACEMENTS) value = value.replace(pattern, ` ${replacement} `)
   value = value.replace(/\s+/g, '')
   return EMAIL_PATTERN.test(value) ? value : null

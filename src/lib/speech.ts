@@ -4,7 +4,10 @@ export interface SpeechRecognitionAlternativeLike {
 }
 export interface SpeechRecognitionResultLike {
   isFinal: boolean
+  /** Number of alternatives (up to maxAlternatives). */
+  length?: number
   0: SpeechRecognitionAlternativeLike
+  [index: number]: SpeechRecognitionAlternativeLike | undefined
 }
 export interface SpeechRecognitionEventLike {
   resultIndex: number
@@ -17,6 +20,7 @@ export interface SpeechRecognitionLike {
   lang: string
   continuous: boolean
   interimResults: boolean
+  maxAlternatives?: number
   onresult: ((event: SpeechRecognitionEventLike) => void) | null
   onerror: ((event: SpeechRecognitionErrorEventLike) => void) | null
   onend: (() => void) | null
